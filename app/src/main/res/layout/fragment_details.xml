@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/jakarta_regular"
             android:textColor="#666666"
             android:textSize="25sp"
@@ -62,26 +62,26 @@
             app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
             tools:text="4.0" />
 
-        <TextView
-            android:id="@+id/review_stars"
-            android:layout_width="0dp"
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:rating="4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/jakarta_bold"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            style="?android:attr/ratingBarStyleSmall"
             app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@id/review_rate"
-            tools:text="☺☺☺☺☺" />
+            app:layout_constraintTop_toBottomOf="@id/review_rate"/>
 
         <TextView
             android:id="@+id/review_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/jakarta_regular"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/review_rate"
-            app:layout_constraintTop_toBottomOf="@id/review_stars"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar"
             tools:text="(257)" />
 
         <TextView
@@ -100,7 +100,7 @@
         <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image">
@@ -110,23 +110,23 @@
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:trackThickness="5dp"
-            tools:progress="20" />
+            app:trackThickness="3dp"
+            tools:progress="100" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/two_stars"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:trackThickness="5dp"
-            tools:progress="40" />
+            app:trackThickness="3dp"
+            tools:progress="75" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/three_stars"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:trackThickness="5dp"
+            app:trackThickness="3dp"
             tools:progress="60" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -134,16 +134,16 @@
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:trackThickness="5dp"
-            tools:progress="80" />
+            app:trackThickness="3dp"
+            tools:progress="30" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/five_stars"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            app:trackThickness="5dp"
-            tools:progress="100" />
+            app:trackThickness="3dp"
+            tools:progress="40" />
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.chip.ChipGroup
