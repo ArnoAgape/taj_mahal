@@ -19,19 +19,10 @@
             android:scaleType="centerCrop"
             android:src="@drawable/food_picture"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvRestaurantName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/jakarta_bold"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tvRestaurantType"
-            app:layout_constraintTop_toBottomOf="@id/tvRestaurantType"
-            tools:text="Taj Mahal" />
 
         <TextView
             android:id="@+id/tvRestaurantType"
@@ -45,6 +36,115 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Restaurant Indien" />
+
+        <TextView
+            android:id="@+id/tvRestaurantName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jakarta_bold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvRestaurantType"
+            app:layout_constraintTop_toBottomOf="@id/tvRestaurantType"
+            tools:text="Taj Mahal" />
+
+        <TextView
+            android:id="@+id/review_rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/jakarta_regular"
+            android:textColor="#666666"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
+            tools:text="4.0" />
+
+        <TextView
+            android:id="@+id/review_stars"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jakarta_bold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@id/review_rate"
+            tools:text="☺☺☺☺☺" />
+
+        <TextView
+            android:id="@+id/review_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:fontFamily="@font/jakarta_regular"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/review_rate"
+            app:layout_constraintTop_toBottomOf="@id/review_stars"
+            tools:text="(257)" />
+
+        <TextView
+            android:id="@+id/review_write"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/jakarta_bold"
+            android:textColor="#666"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/separator"
+            tools:text="Laisser un avis" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/one_star"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:trackThickness="5dp"
+            tools:progress="20" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/two_stars"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:trackThickness="5dp"
+            tools:progress="40" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/three_stars"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:trackThickness="5dp"
+            tools:progress="60" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/four_stars"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:trackThickness="5dp"
+            tools:progress="80" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/five_stars"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:trackThickness="5dp"
+            tools:progress="100" />
+        </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
@@ -82,7 +182,6 @@
                 app:textEndPadding="0dp"
                 app:textStartPadding="0dp" />
 
-
         </com.google.android.material.chip.ChipGroup>
 
         <View
@@ -96,7 +195,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvRestaurantHours"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRestaurantName" />
+            app:layout_constraintTop_toBottomOf="@id/review_number" />
 
         <ImageView
             android:id="@+id/icon_hours"
