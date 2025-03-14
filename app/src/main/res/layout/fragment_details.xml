@@ -35,7 +35,7 @@
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image"
-            tools:text="Restaurant Indien" />
+            tools:text="Restaurant indien" />
 
         <TextView
             android:id="@+id/tvRestaurantName"
@@ -56,20 +56,20 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/jakarta_regular"
             android:textColor="#666666"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
             app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
             tools:text="4.0" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:rating="4"
+        <ImageView
+            android:id="@+id/rating4"
+            android:contentDescription="@string/four_stars"
+            android:src="@drawable/s_4_accueil"
             android:progressTint="#ffb800"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            style="?android:attr/ratingBarStyleSmall"
             app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
             app:layout_constraintTop_toBottomOf="@id/review_rate"/>
 
@@ -78,11 +78,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="13dp"
             android:fontFamily="@font/jakarta_regular"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/review_rate"
-            app:layout_constraintTop_toBottomOf="@id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@id/rating4"
             tools:text="(257)" />
 
         <TextView
@@ -96,7 +96,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/separator"
-            tools:text="Laisser un avis" />
+            android:text="@string/review" />
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
@@ -225,7 +225,7 @@
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/icon_hours"
             app:layout_constraintTop_toBottomOf="@+id/separator"
-            tools:text="Mardi" />
+            android:text="@string/tuesday" />
 
         <TextView
             android:id="@+id/tvRestaurantHours"
