@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.ui.review.ReviewsFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -42,7 +45,7 @@ public class DetailsFragment extends Fragment {
      * It's used to perform one-time initialization.
      *
      * @param savedInstanceState A bundle containing previously saved instance state.
-     * If the fragment is being re-created from a previous saved state, this is the state.
+     *                           If the fragment is being re-created from a previous saved state, this is the state.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,37 +53,49 @@ public class DetailsFragment extends Fragment {
     }
 
     /**
-     * This method is called immediately after `onCreateView()`.
-     * Use this method to perform final initialization once the fragment views have been inflated.
-     *
-     * @param view The View returned by `onCreateView()`.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     */
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setupUI(); // Sets up user interface components.
-        setupViewModel(); // Prepares the ViewModel for the fragment.
-        detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-    }
-
-    /**
      * Creates and returns the view hierarchy associated with the fragment.
      *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
-     * The fragment should not add the view itself but return it.
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     *                           The fragment should not add the view itself but return it.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
+     *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
-        return binding.getRoot(); // Returns the root view.
+        // Returns the root view.
+
+        return binding.getRoot();
     }
 
+    /**
+     * This method is called immediately after `onCreateView()`.
+     * Use this method to perform final initialization once the fragment views have been inflated.
+     *
+     * @param view               The View returned by `onCreateView()`.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.reviewWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // navigate to ReviewsFragment
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
+                fragmentTransaction.replace(R.id.container, reviewsFragment);
+                fragmentTransaction.commit();
+            }
+        });
+        setupUI(); // Sets up user interface components.
+        setupViewModel(); // Prepares the ViewModel for the fragment.
+        detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+    }
 
     /**
      * Sets up the UI-specific properties, such as system UI flags and status bar color.
@@ -121,6 +136,14 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
+        binding.reviewRate.setText(restaurant.getRate());
+        binding.reviewNumber.setText(restaurant.getNumberReviews());
+        binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
+        binding.fiveStars.setProgress(100);
+        binding.fourStars.setProgress(75);
+        binding.threeStars.setProgress(60);
+        binding.twoStars.setProgress(30);
+        binding.oneStar.setProgress(40);
     }
 
     /**

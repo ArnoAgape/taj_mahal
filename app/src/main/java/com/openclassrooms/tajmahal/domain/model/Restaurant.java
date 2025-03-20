@@ -31,6 +31,12 @@ public class Restaurant {
     private boolean dineIn;
     private boolean takeAway;
 
+    private String rate;
+
+    private String numberReviews;
+
+    private Boolean allStars;
+
     /**
      * Constructor for the Restaurant class.
      *
@@ -42,8 +48,10 @@ public class Restaurant {
      * @param phoneNumber The contact phone number of the restaurant.
      * @param dineIn      A boolean indicating if dine-in is available.
      * @param takeAway    A boolean indicating if take-away service is available.
+     * @param rate        The rate of the restaurant.
+     * @param numberReviews The number of reviews of the restaurant.
      */
-    public Restaurant(String name, String type, String hours, String address, String website, String phoneNumber, boolean dineIn, boolean takeAway) {
+    public Restaurant(String name, String type, String hours, String address, String website, String phoneNumber, boolean dineIn, boolean takeAway, String rate, String numberReviews, boolean allStars) {
         this.name = name;
         this.type = type;
         this.hours = hours;
@@ -52,6 +60,9 @@ public class Restaurant {
         this.phoneNumber = phoneNumber;
         this.dineIn = dineIn;
         this.takeAway = takeAway;
+        this.rate = rate;
+        this.numberReviews = numberReviews;
+        this.allStars = allStars;
     }
 
     @Override
@@ -59,12 +70,17 @@ public class Restaurant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return dineIn == that.dineIn && takeAway == that.takeAway && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(hours, that.hours) && Objects.equals(address, that.address) && Objects.equals(website, that.website) && Objects.equals(phoneNumber, that.phoneNumber);
+        return dineIn == that.dineIn && takeAway == that.takeAway && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(hours, that.hours) && Objects.equals(address, that.address) && Objects.equals(website, that.website) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(rate, that.rate) && Objects.equals(numberReviews, that.numberReviews) && Objects.equals(allStars, that.allStars);
     }
 
+    /**
+     * Calcule le code de hachage en utilisant la description et la date d'échéance de la tâche.
+     *
+     * @return Le code de hachage calculé.
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, hours, address, website, phoneNumber, dineIn, takeAway);
+        return Objects.hash(name, type, hours, address, website, phoneNumber, dineIn, takeAway, rate, numberReviews, allStars);
     }
 
     public String getName() {
@@ -129,6 +145,30 @@ public class Restaurant {
 
     public void setTakeAway(boolean takeAway) {
         this.takeAway = takeAway;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getNumberReviews() {
+        return numberReviews;
+    }
+
+    public void setNumberReviews(String numberReviews) {
+        this.numberReviews = numberReviews;
+    }
+
+    public boolean displayAllStars() {
+        return allStars;
+    }
+
+    public void setAllStars(boolean allStars) {
+        this.allStars = allStars;
     }
 
 

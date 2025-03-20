@@ -29,7 +29,6 @@ import java.util.List;
  * @see RestaurantApi
  */
 public class RestaurantFakeApi implements RestaurantApi {
-
     List<Review> reviews = Arrays.asList(
             new Review("Ranjit Singh", "https://xsgames.co/randomusers/assets/avatars/male/71.jpg", "Service très rapide et nourriture délicieuse, nous mangeons ici chaque week-end, c'est très rapide et savoureux. Continuez ainsi!", 5),
             new Review("Martyna Siddeswara", "https://xsgames.co/randomusers/assets/avatars/female/31.jpg", "Un service excellent et des plats incroyablement savoureux. Nous sommes vraiment satisfaits de notre expérience au restaurant.", 4),
@@ -53,7 +52,7 @@ public class RestaurantFakeApi implements RestaurantApi {
     public Restaurant getRestaurant() {
         return new Restaurant("Taj Mahal", "Indien", "11h30 - 14h30・18h30 - 22h00",
                 "12 Avenue de la Brique - 75010 Paris", "http://www.tajmahal.fr", "06 12 34 56 78",
-                true, true);
+                true, true, "4.0", "(257)", true);
     }
 
 
