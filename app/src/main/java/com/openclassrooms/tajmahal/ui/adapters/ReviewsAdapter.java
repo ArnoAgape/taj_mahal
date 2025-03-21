@@ -20,6 +20,7 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,6 @@ import java.util.List;
  */
 
 public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolder> {
-
 
     /**
      * Constructeur de l'adaptateur.
@@ -46,7 +46,9 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Review review = getItem(position);
         holder.bind(getItem(position));
+        Log.d("ReviewsAdapter", "Affichage de l'avis : " + review.getComment());
     }
 
 
@@ -78,45 +80,28 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
          * @param review L'avis à afficher.
          */
         public void bind(Review review) {
-            Log.d("ReviewsAdapter", "Binding review: " + review);
-            if (review == null) {
-                Log.e("ReviewsAdapter", "Review is null!");
-                return; // Évitez de continuer si l'objet est nul
-            }
-            if (review == null) {
-                usernameReview.setText("Erreur : avis non disponible");
-                return;
-            }
+
             // affiche le nom de la personne
-            if (review.getUsername() != null) {
-                usernameReview.setText(review.getUsername());
-            } else {
-                usernameReview.setText("Utilisateur inconnu");
-            }
+            usernameReview.setText(review.getUsername());
+
 
             // affiche la photo de la personne
-            if (review.getPicture() != null && !review.getPicture().isEmpty()) {
-                Glide.with(itemView.getContext())
-                        .load(review.getPicture())
-                        .into(pictureProfileReview);
-            } else {
-                pictureProfileReview.setImageResource(R.drawable.img_manon_garcia); // Image par défaut
-            }
-            Log.d("Glide", "URL de l'image : " + review.getPicture());
+
+            Glide.with(itemView.getContext())
+                    .load(review.getPicture())
+                    .into(pictureProfileReview);
 
 
             // affiche la note de la personne
             rateReview.setRating(review.getRate());
 
             // affiche le nom de la personne
-            if (review.getComment() != null) {
-                commentReview.setText(review.getComment());
-            } else {
-                commentReview.setText("Pas de commentaire");
-            }
+
+            commentReview.setText(review.getComment());
 
         }
     }
+
     private static class ItemCallback extends DiffUtil.ItemCallback<Review> {
 
         @Override

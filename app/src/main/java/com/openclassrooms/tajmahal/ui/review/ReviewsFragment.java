@@ -79,8 +79,9 @@ public class ReviewsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+         return binding.getRoot();
     }
 
     /**
@@ -95,6 +96,10 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (binding == null) {
+            Log.e("ReviewsFragment", "Binding est null !");
+            return;
+        }
         binding.tvRestaurantName.setText(R.string.app_name);
 
         binding.buttonBack.setOnClickListener(v -> {
@@ -104,9 +109,23 @@ public class ReviewsFragment extends Fragment {
                 fragmentTransaction.replace(R.id.container, detailsFragment);
                 fragmentTransaction.commit();
         });
-        setupUI(); // Sets up user interface components.
-        setupViewModel(); // Prepares the ViewModel for the fragment.
-        reviewsViewModel.getReview().observe(requireActivity(), this::updateUIWithReviews);
+        // RecyclerView setup
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewsAdapter = new ReviewsAdapter();
+        binding.recyclerView.setAdapter(reviewsAdapter);
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+        reviewsViewModel.getReview().observe(getViewLifecycleOwner(), this::updateUIWithReviews);
+        reviewsViewModel.getReview().observe(getViewLifecycleOwner(), reviews -> {
+            if (reviews != null && !reviews.isEmpty()) {
+                Log.d("ReviewsFragment", "Nombre d'avis : " + reviews.size());
+                reviewsAdapter.submitList(reviews);
+            } else {
+                Log.d("ReviewsFragment", "Aucun avis trouvé !");
+            }
+        });
+        binding.recyclerView.setVisibility(View.VISIBLE);
+
+
     }
 
     /**

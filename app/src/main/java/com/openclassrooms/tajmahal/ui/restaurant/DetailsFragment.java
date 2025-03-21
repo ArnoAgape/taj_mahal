@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,9 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
         // Returns the root view.
+        Log.d("FragmentCheck", "DetailsFragment onCreateView est affiché");
         return binding.getRoot();
+
     }
 
     /**
@@ -80,6 +83,7 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("FragmentCheck", "DetailsFragment onViewCreated est affiché");
         binding.reviewWrite.setOnClickListener(v -> {
             // navigate to ReviewsFragment
             FragmentManager fragmentManager = getParentFragmentManager();

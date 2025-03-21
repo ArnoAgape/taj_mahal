@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.domain.model.Review;
@@ -31,15 +32,14 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, DetailsFragment.newInstance())
                     .commitNow();
-            setupRecyclerView();
-            setupViewModel();
         }
 
-    }
+        Log.d("FragmentCheck", "MainActivity est affiché");
+    }}
     /**
      * Configure le RecyclerView pour afficher la liste des reviews.
      */
-    private void setupRecyclerView() {
+    /*private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ReviewsAdapter();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Configure le ViewModel et observe les changements dans la liste des reviews.
      */
-    private void setupViewModel() {
+    /*private void setupViewModel() {
         ReviewsViewModel viewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
         viewModel.getReview().observe(this, this::updateReviewList);
     }
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param reviews La liste mise à jour des reviews.
      */
-    private void updateReviewList(List<Review> reviews) {
+    /*private void updateReviewList(List<Review> reviews) {
         adapter.submitList(reviews);
     }
-}
+}*/
 
