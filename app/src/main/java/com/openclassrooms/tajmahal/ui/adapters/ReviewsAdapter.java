@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 
 import org.w3c.dom.Text;
 
@@ -84,9 +85,7 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
             // affiche le nom de la personne
             usernameReview.setText(review.getUsername());
 
-
             // affiche la photo de la personne
-
             Glide.with(itemView.getContext())
                     .load(review.getPicture())
                     .into(pictureProfileReview);
@@ -96,7 +95,6 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
             rateReview.setRating(review.getRate());
 
             // affiche le nom de la personne
-
             commentReview.setText(review.getComment());
 
         }

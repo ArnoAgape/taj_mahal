@@ -49,13 +49,14 @@
         android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@id/userProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/separatorReview"
-        tools:text="Ranjit Singh" />
+        tools:text="Manon Garcia" />
 
     <RatingBar
         android:id="@+id/userRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
+        android:progressTint="#F3BB44"
         android:numStars="5"
         android:rating="5"
         android:layout_marginTop="10dp"

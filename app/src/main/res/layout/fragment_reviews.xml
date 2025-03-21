@@ -40,7 +40,7 @@
         </RelativeLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profile_picture"
+            android:id="@+id/profile_picture_mg"
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginStart="20dp"
@@ -50,14 +50,14 @@
             android:scaleX="-1"
             android:shape="oval"
             android:src="@drawable/img_manon_garcia"
-            app:layout_constraintEnd_toStartOf="@id/name"
+            app:layout_constraintEnd_toStartOf="@id/name_mg"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/circleImageView" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/name_mg"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="70dp"
@@ -79,8 +79,9 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/four_stars"
             android:numStars="5"
-            app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            android:rating="4"
+            app:layout_constraintStart_toStartOf="@id/name_mg"
+            app:layout_constraintTop_toBottomOf="@id/name_mg" />
 
         <EditText
             android:id="@+id/zone_texte"
@@ -94,15 +95,15 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/profile_picture"
-            app:layout_constraintTop_toBottomOf="@id/profile_picture" />
+            app:layout_constraintStart_toStartOf="@id/profile_picture_mg"
+            app:layout_constraintTop_toBottomOf="@id/profile_picture_mg" />
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_picture"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_picture_mg"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.chip.Chip
