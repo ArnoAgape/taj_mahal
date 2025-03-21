@@ -1,5 +1,6 @@
 package com.openclassrooms.tajmahal.ui.review;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,28 +10,44 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
 import com.openclassrooms.tajmahal.R;
+import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
+import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.adapters.ReviewsAdapter;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
+
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ReviewsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
 
+    private ReviewsAdapter reviewsAdapter;
+    private RecyclerView recyclerView;
+    private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
 
-    private DetailsViewModel detailsViewModel;
+    private Review review;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -61,9 +78,7 @@ public class ReviewsFragment extends Fragment {
      */
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -76,45 +91,52 @@ public class ReviewsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.tvRestaurantName.setText(R.string.app_name);
 
         binding.buttonBack.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getParentFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            DetailsFragment detailsFragment = DetailsFragment.newInstance();
-            fragmentTransaction.replace(R.id.container, detailsFragment);
-            fragmentTransaction.commit();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                DetailsFragment detailsFragment = DetailsFragment.newInstance();
+                fragmentTransaction.replace(R.id.container, detailsFragment);
+                fragmentTransaction.commit();
         });
-    }
-
-    private void updateUIWithRestaurant(Review review) {
-        if (review == null) return;
-        binding.name.setText(review.getUsername());
-        binding.rating.setRating(review.getRate());
-        binding.zoneTexte.setText(review.getComment());
-
+        setupUI(); // Sets up user interface components.
+        setupViewModel(); // Prepares the ViewModel for the fragment.
+        reviewsViewModel.getReview().observe(requireActivity(), this::updateUIWithReviews);
     }
 
     /**
-     * Sets up the UI-specific properties, such as system UI flags and status bar color.
-     */
-    private void setupUI() {
-        Window window = requireActivity().getWindow();
-        window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        );
-        window.setStatusBarColor(Color.TRANSPARENT);
-    }
+         * Sets up the UI-specific properties, such as system UI flags and status bar color.
+         */
+        private void setupUI() {
+            Window window = requireActivity().getWindow();
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            );
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
 
-    /**
-     * Initializes the ViewModel for this activity.
-     */
-    private void setupViewModel() {
-        detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
-    }
+        /**
+         * Initializes the ViewModel for this activity.
+         */
+        private void setupViewModel() {
+            reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+        }
+
+        /**
+         * Updates the UI components with the provided restaurant data.
+         *
+         * @param review The restaurant object containing details to be displayed.
+         */
+        private void updateUIWithReviews(List<Review> review){
+            if (review == null) return;
+
+        }
+
 
     public static ReviewsFragment newInstance() {
         return new ReviewsFragment();

@@ -34,11 +34,10 @@
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="54dp"
                 android:fontFamily="@font/jakarta_bold"
-                android:textStyle="bold"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="Taj Mahal" />
         </RelativeLayout>
-
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_picture"
@@ -61,7 +60,7 @@
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="68dp"
+            android:layout_marginStart="70dp"
             android:layout_marginTop="108dp"
             android:fontFamily="@font/inter_semibold"
             android:textColor="#666666"
@@ -72,13 +71,13 @@
 
         <RatingBar
             android:id="@+id/rating"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleSmall"
-            android:numStars="5"
-            android:rating="4"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/four_stars"
+            android:numStars="5"
+            android:rating="4"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
@@ -121,17 +120,6 @@
 
         </com.google.android.material.chip.ChipGroup>
 
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="0dp"
-            android:layout_height="0.75dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="15dp"
-            android:background="#DADADA"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/zone_texte" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

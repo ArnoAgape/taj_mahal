@@ -66,7 +66,6 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
         // Returns the root view.
-
         return binding.getRoot();
     }
 
@@ -81,16 +80,13 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.reviewWrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // navigate to ReviewsFragment
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
-                fragmentTransaction.replace(R.id.container, reviewsFragment);
-                fragmentTransaction.commit();
-            }
+        binding.reviewWrite.setOnClickListener(v -> {
+            // navigate to ReviewsFragment
+            FragmentManager fragmentManager = getParentFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
+            fragmentTransaction.replace(R.id.container, reviewsFragment);
+            fragmentTransaction.commit();
         });
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
