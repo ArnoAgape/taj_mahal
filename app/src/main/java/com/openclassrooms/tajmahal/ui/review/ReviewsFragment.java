@@ -48,7 +48,7 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
-    private RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
+    private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -82,7 +82,7 @@ public class ReviewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
-         return binding.getRoot();
+        return binding.getRoot();
     }
 
     /**
@@ -97,10 +97,7 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (binding == null) {
-            Log.e("ReviewsFragment", "Binding est null !");
-            return;
-        }
+
         // shows the name of the restaurant
         binding.tvRestaurantName.setText(R.string.app_name);
 
@@ -117,19 +114,19 @@ public class ReviewsFragment extends Fragment {
 
         // shows the left arrow to go to the homepage
         binding.buttonBack.setOnClickListener(v -> {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                DetailsFragment detailsFragment = DetailsFragment.newInstance();
-                fragmentTransaction.replace(R.id.container, detailsFragment);
-                fragmentTransaction.commit();
+            FragmentManager fragmentManager = getParentFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            DetailsFragment detailsFragment = DetailsFragment.newInstance();
+            fragmentTransaction.replace(R.id.container, detailsFragment);
+            fragmentTransaction.commit();
         });
         // RecyclerView setup
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         reviewsAdapter = new ReviewsAdapter();
         binding.recyclerView.setAdapter(reviewsAdapter);
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        reviewsViewModel.getReview().observe(getViewLifecycleOwner(), this::updateUIWithReviews);
-        reviewsViewModel.getReview().observe(getViewLifecycleOwner(), reviews -> {
+        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), this::updateUIWithReviews);
+        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null && !reviews.isEmpty()) {
                 Log.d("ReviewsFragment", "Nombre d'avis : " + reviews.size());
                 reviewsAdapter.submitList(reviews);
@@ -139,36 +136,35 @@ public class ReviewsFragment extends Fragment {
         });
         binding.recyclerView.setVisibility(View.VISIBLE);
 
-
     }
 
     /**
-         * Sets up the UI-specific properties, such as system UI flags and status bar color.
-         */
-        private void setupUI() {
-            Window window = requireActivity().getWindow();
-            window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
+     * Sets up the UI-specific properties, such as system UI flags and status bar color.
+     */
+    private void setupUI() {
+        Window window = requireActivity().getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+        window.setStatusBarColor(Color.TRANSPARENT);
+    }
 
-        /**
-         * Initializes the ViewModel for this activity.
-         */
-        private void setupViewModel() {
-            reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        }
+    /**
+     * Initializes the ViewModel for this activity.
+     */
+    private void setupViewModel() {
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+    }
 
-        /**
-         * Updates the UI components with the provided restaurant data.
-         *
-         * @param review The restaurant object containing details to be displayed.
-         */
-        private void updateUIWithReviews(List<Review> review){
-            if (review == null) return;
+    /**
+     * Updates the UI components with the provided restaurant data.
+     *
+     * @param review The restaurant object containing details to be displayed.
+     */
+    private void updateUIWithReviews(List<Review> review) {
+        if (review == null) return;
 
-        }
+    }
 
 
     public static ReviewsFragment newInstance() {

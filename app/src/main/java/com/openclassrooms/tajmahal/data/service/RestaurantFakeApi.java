@@ -55,7 +55,7 @@ public class RestaurantFakeApi implements RestaurantApi {
     public Restaurant getRestaurant() {
         return new Restaurant("Taj Mahal", "Indien", "11h30 - 14h30・18h30 - 22h00",
                 "12 Avenue de la Brique - 75010 Paris", "http://www.tajmahal.fr", "06 12 34 56 78",
-                true, true, "4.0", "(257)", true);
+                true, true, "", "", true);
     }
 
 

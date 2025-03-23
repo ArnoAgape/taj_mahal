@@ -49,7 +49,7 @@ public class ReviewsViewModel extends ViewModel {
      *
      * @return LiveData object containing the details of the reviews.
      */
-    public LiveData<List<Review>> getReview() {
+    public LiveData<List<Review>> getReviews() {
         LiveData<List<Review>> reviews = restaurantRepository.getReviews();
         Log.d("ReviewsViewModel", "Nombre de reviews récupérées : " + (reviews != null ? Objects.requireNonNull(reviews.getValue()).size() : "null"));
         return reviews != null ? reviews : new MutableLiveData<>(Collections.emptyList());

@@ -1,5 +1,6 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -20,9 +21,15 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.R;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.ui.review.ReviewsFragment;
+import com.openclassrooms.tajmahal.ui.review.ReviewsViewModel;
+
+import java.util.Arrays;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -40,6 +47,12 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
 
     private DetailsViewModel detailsViewModel;
+
+    private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
+
+    public DetailsFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * This method is called when the fragment is first created.
@@ -80,10 +93,20 @@ public class DetailsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d("FragmentCheck", "DetailsFragment onViewCreated est affiché");
+
+        List<Review> reviews = restaurantFakeApi.getReviews();
+        Log.d("RecyclerView", "Nombre d'éléments dans la liste : " + reviews.size());
+        int reviewsNumber = reviews.size();
+        binding.reviewNumber.setText("(" + (reviewsNumber) + ")");
+
+        Log.d("RecyclerView", "Somme de la liste : " + getAverageRating());
+        binding.reviewRate.setText(String.valueOf(getAverageRating()));
+
         binding.reviewWrite.setOnClickListener(v -> {
             // navigate to ReviewsFragment
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -95,6 +118,15 @@ public class DetailsFragment extends Fragment {
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+    }
+
+    /**
+     * Calculate the average of the rates of the users
+     */
+    public float getAverageRating() {
+        List<Review> reviews = restaurantFakeApi.getReviews();
+        return reviews.isEmpty() ? 0 :
+                (float) reviews.stream().mapToInt(Review::getRate).average().orElse(0);
     }
 
     /**
@@ -136,8 +168,6 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
-        binding.reviewRate.setText(restaurant.getRate());
-        binding.reviewNumber.setText(restaurant.getNumberReviews());
         binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
         binding.fiveStars.setProgress(100);
         binding.fourStars.setProgress(75);

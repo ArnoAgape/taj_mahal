@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/review_rate"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
@@ -77,13 +77,14 @@
             android:id="@+id/review_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/jakarta_regular"
             android:textSize="12sp"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="@id/review_rate"
             app:layout_constraintTop_toBottomOf="@id/rating4"
-            tools:text="(257)" />
+            tools:text="(5)"/>
 
         <TextView
             android:id="@+id/review_write"

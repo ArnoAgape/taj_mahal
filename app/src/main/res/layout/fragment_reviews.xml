@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <android.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/buttonBack"
-                android:layout_width="wrap_content"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -30,14 +30,14 @@
                 android:id="@+id/tvRestaurantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="54dp"
                 android:fontFamily="@font/jakarta_bold"
                 android:textColor="#333333"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="Taj Mahal" />
-        </RelativeLayout>
+        </android.widget.Toolbar>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_picture_mg"
@@ -79,7 +79,7 @@
             android:isIndicator="false"
             android:numStars="5"
             android:progressTint="#F3BB44"
-            android:rating="4"
+            android:rating="0"
             app:layout_constraintStart_toStartOf="@id/name_mg"
             app:layout_constraintTop_toBottomOf="@id/name_mg" />
 
