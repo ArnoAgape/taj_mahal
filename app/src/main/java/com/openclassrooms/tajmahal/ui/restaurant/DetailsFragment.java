@@ -26,9 +26,7 @@ import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.ui.review.ReviewsFragment;
-import com.openclassrooms.tajmahal.ui.review.ReviewsViewModel;
 
-import java.util.Arrays;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -100,11 +98,10 @@ public class DetailsFragment extends Fragment {
         Log.d("FragmentCheck", "DetailsFragment onViewCreated est affiché");
 
         List<Review> reviews = restaurantFakeApi.getReviews();
-        Log.d("RecyclerView", "Nombre d'éléments dans la liste : " + reviews.size());
         int reviewsNumber = reviews.size();
         binding.reviewNumber.setText("(" + (reviewsNumber) + ")");
 
-        Log.d("RecyclerView", "Somme de la liste : " + getAverageRating());
+        Log.d("FragmentCheck", "Moyenne des avis : " + getAverageRating());
         binding.reviewRate.setText(String.valueOf(getAverageRating()));
 
         binding.reviewWrite.setOnClickListener(v -> {
@@ -115,6 +112,7 @@ public class DetailsFragment extends Fragment {
             fragmentTransaction.replace(R.id.container, reviewsFragment);
             fragmentTransaction.commit();
         });
+        starRating();
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
@@ -123,10 +121,35 @@ public class DetailsFragment extends Fragment {
     /**
      * Calculate the average of the rates of the users
      */
-    public float getAverageRating() {
+    public double getAverageRating() {
         List<Review> reviews = restaurantFakeApi.getReviews();
         return reviews.isEmpty() ? 0 :
-                (float) reviews.stream().mapToInt(Review::getRate).average().orElse(0);
+                (double) reviews.stream().mapToInt(Review::getRate).average().orElse(0);
+    }
+
+    /**
+     * Shows the rating stars according to the average of the rates of the users
+     */
+    public void starRating() {
+        double averageRating = getAverageRating();
+
+        // Cacher toutes les étoiles au départ
+        binding.rating1.setVisibility(View.GONE);
+        binding.rating2.setVisibility(View.GONE);
+        binding.rating3.setVisibility(View.GONE);
+        binding.rating4.setVisibility(View.GONE);
+        binding.rating5.setVisibility(View.GONE);
+
+        if (averageRating > 0.0 && averageRating <= 1.0)
+            binding.rating1.setVisibility(View.VISIBLE);
+        else if (averageRating > 1.0 && averageRating <= 2.0)
+                binding.rating2.setVisibility(View.VISIBLE);
+        else if (averageRating > 2.0 && averageRating <= 3.0)
+                binding.rating3.setVisibility(View.VISIBLE);
+        else if (averageRating > 3.0 && averageRating <= 4.0)
+                binding.rating4.setVisibility(View.VISIBLE);
+        else if (averageRating > 4.0 && averageRating < 5.0)
+                binding.rating5.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -165,7 +188,7 @@ public class DetailsFragment extends Fragment {
         binding.chipOnPremise.setVisibility(restaurant.isDineIn() ? View.VISIBLE : View.GONE);
         binding.chipTakeAway.setVisibility(restaurant.isTakeAway() ? View.VISIBLE : View.GONE);
 
-        binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
+        binding.buttonAddress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
         binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
