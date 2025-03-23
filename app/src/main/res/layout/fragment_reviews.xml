@@ -24,8 +24,7 @@
                 android:layout_marginTop="46dp"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/ic_arrow_left"
-                android:padding="0dp"
-                android:text="@string/back" />
+                android:padding="0dp"/>
 
             <TextView
                 android:id="@+id/tvRestaurantName"
@@ -34,6 +33,7 @@
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="54dp"
                 android:fontFamily="@font/jakarta_bold"
+                android:textColor="#333333"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="Taj Mahal" />
@@ -72,13 +72,13 @@
         <RatingBar
             android:id="@+id/rating"
             style="?android:attr/ratingBarStyleSmall"
-            android:progressTint="#F3BB44"
-            android:isIndicator="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/four_stars"
+            android:isIndicator="false"
             android:numStars="5"
+            android:progressTint="#F3BB44"
             android:rating="4"
             app:layout_constraintStart_toStartOf="@id/name_mg"
             app:layout_constraintTop_toBottomOf="@id/name_mg" />
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/zone_texte"/>
+            app:layout_constraintTop_toBottomOf="@id/zone_texte" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

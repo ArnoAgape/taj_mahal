@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,14 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Un adaptateur pour afficher la liste des reviews dans un RecyclerView.
@@ -63,6 +61,12 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
         private final RatingBar rateReview;
         private final TextView commentReview;
 
+        private final LinearProgressIndicator ratingFive;
+        private final LinearProgressIndicator ratingFour;
+        private final LinearProgressIndicator ratingThree;
+        private final LinearProgressIndicator ratingTwo;
+        private final LinearProgressIndicator ratingOne;
+
         /**
          * Constructeur du ViewHolder.
          */
@@ -73,6 +77,11 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
             usernameReview = itemView.findViewById(R.id.userName);
             rateReview = itemView.findViewById(R.id.userRating);
             commentReview = itemView.findViewById(R.id.userComment);
+            ratingFive = itemView.findViewById(R.id.five_stars);
+            ratingFour = itemView.findViewById(R.id.four_stars);
+            ratingThree = itemView.findViewById(R.id.three_stars);
+            ratingTwo = itemView.findViewById(R.id.two_stars);
+            ratingOne = itemView.findViewById(R.id.one_star);
         }
 
         /**
@@ -82,7 +91,7 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
          */
         public void bind(Review review) {
 
-            // affiche le nom de la personne
+            // affiche le nom de la personne qui a laissé un avis
             usernameReview.setText(review.getUsername());
 
             // affiche la photo de la personne
@@ -96,6 +105,46 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
 
             // affiche le nom de la personne
             commentReview.setText(review.getComment());
+/*
+            // affiche le nombre d'avis de 5 étoiles
+            int pourcentage = calculateProgress(review.getRate());
+            ratingFive.setProgress(pourcentage);
+
+            // affiche le nombre d'avis de 4 étoiles
+            ratingFour.setProgress(pourcentage);
+
+            // affiche le nombre d'avis de 3 étoiles
+            ratingThree.setProgress(pourcentage);
+
+            // affiche le nombre d'avis de 2 étoiles
+            ratingTwo.setProgress(pourcentage);
+
+            // affiche le nombre d'avis de 1 étoile
+            ratingOne.setProgress(pourcentage);
+*/
+        }
+
+        /**
+         * Fonction pour convertir le nombre d'étoiles en pourcentage
+         */
+        private int calculateProgress(Date dueTime) {
+            Calendar dateDuJour = Calendar.getInstance();
+            dateDuJour.set(Calendar.HOUR_OF_DAY, 0);
+            dateDuJour.set(Calendar.MINUTE, 0);
+            dateDuJour.set(Calendar.SECOND, 0);
+            dateDuJour.set(Calendar.MILLISECOND, 0);
+
+            Calendar dateTache = Calendar.getInstance();
+            dateTache.setTime(dueTime);
+            dateTache.set(Calendar.HOUR_OF_DAY, 0);
+            dateTache.set(Calendar.MINUTE, 0);
+            dateTache.set(Calendar.SECOND, 0);
+            dateTache.set(Calendar.MILLISECOND, 0);
+
+            int joursRestants = (int) ((dateTache.getTimeInMillis() -
+                    dateDuJour.getTimeInMillis()) / (24 * 3600 * 1000));
+            return 100 - (joursRestants * 10);
+
 
         }
     }

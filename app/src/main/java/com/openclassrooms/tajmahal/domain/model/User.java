@@ -13,8 +13,6 @@ public class User {
     private String phoneNumber;
     private String emailAddress;
     private String profilePicture;
-    private int rate;
-    private String comment;
 
     /**
      * Constructor for the User class.
@@ -23,14 +21,10 @@ public class User {
      * @param phoneNumber    The contact phone number of the user.
      * @param emailAddress   The email address of the user.
      * @param profilePicture The profile picture of the user.
-     * @param rate           The rate of the user.
-     * @param comment        The comment of the user.
      */
-    public User(String name, String phoneNumber, String emailAddress, String profilePicture, int rate, String comment) {
+    public User(String name, String phoneNumber, String emailAddress, String profilePicture) {
         this.name = name;
         this.profilePicture = profilePicture;
-        this.comment = comment;
-        this.rate = rate;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
     }
@@ -67,31 +61,15 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return rate == user.rate && Objects.equals(name, user.name) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(emailAddress, user.emailAddress) && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(comment, user.comment);
+        return Objects.equals(name, user.name) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(emailAddress, user.emailAddress) && Objects.equals(profilePicture, user.profilePicture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, phoneNumber, emailAddress, profilePicture, rate, comment);
+        return Objects.hash(name, phoneNumber, emailAddress, profilePicture);
     }
 }

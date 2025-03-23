@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.openclassrooms.tajmahal.R;
+import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 import com.openclassrooms.tajmahal.ui.adapters.ReviewsAdapter;
 import com.openclassrooms.tajmahal.ui.review.ReviewsViewModel;

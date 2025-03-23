@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,6 +78,24 @@ public class RestaurantFakeApi implements RestaurantApi {
         reviews.add(new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4));
         Log.d("RecyclerView", "Nombre d'éléments dans la liste : " + reviews.size());
         return reviews;
+    }
+
+    /**
+     * Retrieves a hard-coded {@link User} object for the "Taj Mahal".
+     * <p>
+     * This method simulates an API call by immediately returning a Restaurant object
+     * with pre-defined attributes. The object represents the "Taj Mahal" restaurant
+     * with specific details.
+     * </p>
+     *
+     * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
+     */
+    @Override
+    public List<User> getUsers() {
+        List <User> users = new ArrayList<>();
+        users.add(new User("Manon Garcia", "06.12.34.56.78", "manon.garcia@gmail.com",
+                "https://xsgames.co/randomusers/assets/avatars/female/71.jpg"));
+        return users;
     }
 
 

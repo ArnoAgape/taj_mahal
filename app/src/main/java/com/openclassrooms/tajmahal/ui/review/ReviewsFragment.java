@@ -20,12 +20,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.adapters.ReviewsAdapter;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
@@ -46,8 +48,7 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
-
-    private Review review;
+    private RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -100,8 +101,21 @@ public class ReviewsFragment extends Fragment {
             Log.e("ReviewsFragment", "Binding est null !");
             return;
         }
+        // shows the name of the restaurant
         binding.tvRestaurantName.setText(R.string.app_name);
 
+        // shows the name of the user
+        List<User> users = restaurantFakeApi.getUsers();
+        User userName = users.get(0);
+        binding.nameMg.setText(userName.getName());
+
+        // shows the profile picture of the user
+        User profilePicturemg = users.get(0);
+        Glide.with(this)
+                .load(profilePicturemg.getProfilePicture())
+                .into(binding.profilePictureMg);
+
+        // shows the left arrow to go to the homepage
         binding.buttonBack.setOnClickListener(v -> {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
