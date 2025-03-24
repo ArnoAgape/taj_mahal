@@ -104,6 +104,17 @@ public class DetailsFragment extends Fragment {
         Log.d("FragmentCheck", "Moyenne des avis : " + getAverageRating());
         binding.reviewRate.setText(String.valueOf(getAverageRating()));
 
+        int percentage5 = countingRate5(reviews);
+        int percentage4 = countingRate4(reviews);
+        int percentage3 = countingRate3(reviews);
+        int percentage2 = countingRate2(reviews);
+        int percentage1 = countingRate1(reviews);
+        binding.fiveStars.setProgress(percentage5);
+        binding.fourStars.setProgress(percentage4);
+        binding.threeStars.setProgress(percentage3);
+        binding.twoStars.setProgress(percentage2);
+        binding.oneStar.setProgress(percentage1);
+
         binding.reviewWrite.setOnClickListener(v -> {
             // navigate to ReviewsFragment
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -140,16 +151,67 @@ public class DetailsFragment extends Fragment {
         binding.rating4.setVisibility(View.GONE);
         binding.rating5.setVisibility(View.GONE);
 
-        if (averageRating > 0.0 && averageRating <= 1.0)
+        if (averageRating == 1.0)
             binding.rating1.setVisibility(View.VISIBLE);
         else if (averageRating > 1.0 && averageRating <= 2.0)
-                binding.rating2.setVisibility(View.VISIBLE);
+            binding.rating2.setVisibility(View.VISIBLE);
         else if (averageRating > 2.0 && averageRating <= 3.0)
-                binding.rating3.setVisibility(View.VISIBLE);
+            binding.rating3.setVisibility(View.VISIBLE);
         else if (averageRating > 3.0 && averageRating <= 4.0)
-                binding.rating4.setVisibility(View.VISIBLE);
+            binding.rating4.setVisibility(View.VISIBLE);
         else if (averageRating > 4.0 && averageRating < 5.0)
-                binding.rating5.setVisibility(View.VISIBLE);
+            binding.rating5.setVisibility(View.VISIBLE);
+    }
+
+    private int countingRate5(List<Review> reviews) {
+        int count = 0;
+        for (Review review : reviews) {
+            if (review.getRate() == 5) {
+                count++;
+            }
+        }
+        return (int) ((count / (double) reviews.size()) * 100);
+    }
+
+
+    private int countingRate4(List<Review> reviews) {
+        int count = 0;
+        for (Review review : reviews) {
+            if (review.getRate() == 4) {
+                count++;
+            }
+        }
+        return (int) ((count / (double) reviews.size()) * 100);
+    }
+
+    private int countingRate3(List<Review> reviews) {
+        int count = 0;
+        for (Review review : reviews) {
+            if (review.getRate() == 3) {
+                count++;
+            }
+        }
+        return (int) ((count / (double) reviews.size()) * 100);
+    }
+
+    private int countingRate2(List<Review> reviews) {
+        int count = 0;
+        for (Review review : reviews) {
+            if (review.getRate() == 2) {
+                count++;
+            }
+        }
+        return (int) ((count / (double) reviews.size()) * 100);
+    }
+
+    private int countingRate1(List<Review> reviews) {
+        int count = 0;
+        for (Review review : reviews) {
+            if (review.getRate() == 1) {
+                count++;
+            }
+        }
+        return (int) ((count / (double) reviews.size()) * 100);
     }
 
     /**
@@ -192,11 +254,6 @@ public class DetailsFragment extends Fragment {
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
         binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
-        binding.fiveStars.setProgress(100);
-        binding.fourStars.setProgress(75);
-        binding.threeStars.setProgress(60);
-        binding.twoStars.setProgress(30);
-        binding.oneStar.setProgress(40);
     }
 
     /**

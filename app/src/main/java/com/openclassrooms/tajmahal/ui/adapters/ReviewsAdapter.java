@@ -61,12 +61,6 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
         private final RatingBar rateReview;
         private final TextView commentReview;
 
-        private final LinearProgressIndicator ratingFive;
-        private final LinearProgressIndicator ratingFour;
-        private final LinearProgressIndicator ratingThree;
-        private final LinearProgressIndicator ratingTwo;
-        private final LinearProgressIndicator ratingOne;
-
         /**
          * Constructeur du ViewHolder.
          */
@@ -77,11 +71,7 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
             usernameReview = itemView.findViewById(R.id.userName);
             rateReview = itemView.findViewById(R.id.userRating);
             commentReview = itemView.findViewById(R.id.userComment);
-            ratingFive = itemView.findViewById(R.id.five_stars);
-            ratingFour = itemView.findViewById(R.id.four_stars);
-            ratingThree = itemView.findViewById(R.id.three_stars);
-            ratingTwo = itemView.findViewById(R.id.two_stars);
-            ratingOne = itemView.findViewById(R.id.one_star);
+
         }
 
         /**
@@ -105,46 +95,6 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
 
             // affiche le nom de la personne
             commentReview.setText(review.getComment());
-/*
-            // affiche le nombre d'avis de 5 étoiles
-            int pourcentage = calculateProgress(review.getRate());
-            ratingFive.setProgress(pourcentage);
-
-            // affiche le nombre d'avis de 4 étoiles
-            ratingFour.setProgress(pourcentage);
-
-            // affiche le nombre d'avis de 3 étoiles
-            ratingThree.setProgress(pourcentage);
-
-            // affiche le nombre d'avis de 2 étoiles
-            ratingTwo.setProgress(pourcentage);
-
-            // affiche le nombre d'avis de 1 étoile
-            ratingOne.setProgress(pourcentage);
-*/
-        }
-
-        /**
-         * Fonction pour convertir le nombre d'étoiles en pourcentage
-         */
-        private int calculateProgress(Date dueTime) {
-            Calendar dateDuJour = Calendar.getInstance();
-            dateDuJour.set(Calendar.HOUR_OF_DAY, 0);
-            dateDuJour.set(Calendar.MINUTE, 0);
-            dateDuJour.set(Calendar.SECOND, 0);
-            dateDuJour.set(Calendar.MILLISECOND, 0);
-
-            Calendar dateTache = Calendar.getInstance();
-            dateTache.setTime(dueTime);
-            dateTache.set(Calendar.HOUR_OF_DAY, 0);
-            dateTache.set(Calendar.MINUTE, 0);
-            dateTache.set(Calendar.SECOND, 0);
-            dateTache.set(Calendar.MILLISECOND, 0);
-
-            int joursRestants = (int) ((dateTache.getTimeInMillis() -
-                    dateDuJour.getTimeInMillis()) / (24 * 3600 * 1000));
-            return 100 - (joursRestants * 10);
-
 
         }
     }
