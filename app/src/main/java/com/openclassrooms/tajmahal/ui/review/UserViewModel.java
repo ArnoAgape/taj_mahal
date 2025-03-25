@@ -28,7 +28,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class UserViewModel extends ViewModel {
-    private final MutableLiveData<List<User>> userLiveData = new MutableLiveData<>();
     private final RestaurantRepository restaurantRepository;
 
     /**
@@ -39,18 +38,6 @@ public class UserViewModel extends ViewModel {
     @Inject
     public UserViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-    }
-
-    /**
-     * Fetches the details of the reviews.
-     *
-     * @return LiveData object containing the details of the reviews.
-     */
-    public LiveData<List<User>> getUsers() {
-        MutableLiveData<List<User>> users = restaurantRepository.getUsers();
-        Log.d("UserViewModel", "Nombre d'utilisateur récupéré : " + (users != null ? Objects.requireNonNull(users.getValue()).size() : "null"));
-        return restaurantRepository.getUsers();
-
     }
 
 

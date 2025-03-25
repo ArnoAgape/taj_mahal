@@ -39,6 +39,9 @@ android {
 dependencies {
     implementation("androidx.work:work-runtime:2.8.1")
     implementation("androidx.navigation:navigation-runtime:2.8.9")
+    implementation("androidx.navigation:navigation-fragment:2.8.9")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
     val hiltVersion = "2.44"
 
     //Hilt

@@ -1,79 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/reviews_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reviews_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/separatorReview"
-        android:layout_width="0dp"
-        android:layout_height="0.75dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
-        android:background="#DADADA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/userProfilePicture"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="20dp"
-        android:contentDescription=""
-        android:scaleType="centerCrop"
-        android:scaleX="-1"
-        android:shape="oval"
-        app:shapeAppearanceOverlay="@style/circleImageView"
-        android:src="@drawable/img_manon_garcia"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separatorReview" />
+        <View
+            android:id="@+id/separator"
+            android:layout_width="0dp"
+            android:layout_height="0.75dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="#DADADA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userComment" />
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="9dp"
-        android:fontFamily="@font/inter_semibold"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintLeft_toRightOf="@id/userProfilePicture"
-        app:layout_constraintTop_toBottomOf="@+id/separatorReview"
-        tools:text="Manon Garcia" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userProfilePicture"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/profile_picture_description"
+            android:scaleType="centerCrop"
+            android:scaleX="-1"
+            android:shape="oval"
+            android:src="@drawable/img_manon_garcia"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
 
-    <RatingBar
-        android:id="@+id/userRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?android:attr/ratingBarStyleSmall"
-        android:progressTint="#F3BB44"
-        android:numStars="5"
-        android:rating="5"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/four_stars"
-        app:layout_constraintStart_toStartOf="@id/userName"
-        app:layout_constraintTop_toBottomOf="@id/userName" />
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/userProfilePicture"
+            app:layout_constraintStart_toEndOf="@id/userProfilePicture"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Manon Garcia" />
 
-    <TextView
-        android:id="@+id/userComment"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textSize="10sp"
-        android:fontFamily="@font/jakarta_plus"
-        android:textColor="#666666"
-        app:layout_constraintStart_toStartOf="@id/userProfilePicture"
-        app:layout_constraintTop_toBottomOf="@id/userProfilePicture"
-        tools:text="Service très rapide et nourriture délicieuse, nous mangeons ici chaque week-end."/>
+        <RatingBar
+            android:id="@+id/userRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="7dp"
+            android:contentDescription="@string/four_stars"
+            android:numStars="5"
+            android:progressTint="#F3BB44"
+            android:rating="5"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:layout_constraintStart_toStartOf="@id/userName"
+            app:layout_constraintTop_toBottomOf="@id/userName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/userComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/jakarta_plus"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/userProfilePicture"
+            app:layout_constraintTop_toBottomOf="@id/userProfilePicture"
+            tools:text="Service très rapide et nourriture délicieuse, nous mangeons ici chaque week-end." />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

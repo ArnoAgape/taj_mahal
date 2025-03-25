@@ -2,11 +2,15 @@ package com.openclassrooms.tajmahal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toolbar;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
@@ -37,31 +41,4 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("FragmentCheck", "MainActivity est affiché");
     }}
-    /**
-     * Configure le RecyclerView pour afficher la liste des reviews.
-     */
-    /*private void setupRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ReviewsAdapter();
-        recyclerView.setAdapter(adapter);
-    }
-
-    /**
-     * Configure le ViewModel et observe les changements dans la liste des reviews.
-     */
-    /*private void setupViewModel() {
-        ReviewsViewModel viewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        viewModel.getReview().observe(this, this::updateReviewList);
-    }
-
-    /**
-     * Met à jour la liste des reviews affichée dans l'adaptateur.
-     *
-     * @param reviews La liste mise à jour des reviews.
-     */
-    /*private void updateReviewList(List<Review> reviews) {
-        adapter.submitList(reviews);
-    }
-}*/
 

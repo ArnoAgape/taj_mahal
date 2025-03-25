@@ -1,5 +1,6 @@
 package com.openclassrooms.tajmahal.ui.adapters;
 
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.openclassrooms.tajmahal.R;
+import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
+import com.openclassrooms.tajmahal.databinding.ReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 
@@ -56,22 +59,11 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
      */
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView usernameReview;
-        private final ShapeableImageView pictureProfileReview;
-        private final RatingBar rateReview;
-        private final TextView commentReview;
-
         /**
          * Constructeur du ViewHolder.
          */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            pictureProfileReview = itemView.findViewById(R.id.userProfilePicture);
-            usernameReview = itemView.findViewById(R.id.userName);
-            rateReview = itemView.findViewById(R.id.userRating);
-            commentReview = itemView.findViewById(R.id.userComment);
-
         }
 
         /**
@@ -80,22 +72,21 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
          * @param review L'avis à afficher.
          */
         public void bind(Review review) {
+            ReviewsBinding binding = ReviewsBinding.bind(itemView);
 
-            // affiche le nom de la personne qui a laissé un avis
-            usernameReview.setText(review.getUsername());
+            // shows the name of the user
+            binding.userName.setText(review.getUsername());
 
-            // affiche la photo de la personne
+            // shows the rating of the user
+            binding.userRating.setRating(review.getRate());
+
+            // shows the comment of the user
+            binding.userComment.setText(review.getComment());
+
+            // shows the picture of the user
             Glide.with(itemView.getContext())
                     .load(review.getPicture())
-                    .into(pictureProfileReview);
-
-
-            // affiche la note de la personne
-            rateReview.setRating(review.getRate());
-
-            // affiche le nom de la personne
-            commentReview.setText(review.getComment());
-
+                    .into(binding.userProfilePicture);
         }
     }
 

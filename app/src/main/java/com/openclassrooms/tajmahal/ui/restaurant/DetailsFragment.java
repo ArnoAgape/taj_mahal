@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.ui.review.ReviewsFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -45,8 +48,6 @@ public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
 
     private DetailsViewModel detailsViewModel;
-
-    private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -91,29 +92,12 @@ public class DetailsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
-    @SuppressLint("SetTextI18n")
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("FragmentCheck", "DetailsFragment onViewCreated est affiché");
 
-        List<Review> reviews = restaurantFakeApi.getReviews();
-        int reviewsNumber = reviews.size();
-        binding.reviewNumber.setText("(" + (reviewsNumber) + ")");
-
-        Log.d("FragmentCheck", "Moyenne des avis : " + getAverageRating());
-        binding.reviewRate.setText(String.valueOf(getAverageRating()));
-
-        int percentage5 = countingRate5(reviews);
-        int percentage4 = countingRate4(reviews);
-        int percentage3 = countingRate3(reviews);
-        int percentage2 = countingRate2(reviews);
-        int percentage1 = countingRate1(reviews);
-        binding.fiveStars.setProgress(percentage5);
-        binding.fourStars.setProgress(percentage4);
-        binding.threeStars.setProgress(percentage3);
-        binding.twoStars.setProgress(percentage2);
-        binding.oneStar.setProgress(percentage1);
+        // Log.d("FragmentCheck", "Moyenne des avis : " + getAverageRating());
 
         binding.reviewWrite.setOnClickListener(v -> {
             // navigate to ReviewsFragment
@@ -121,97 +105,14 @@ public class DetailsFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
             fragmentTransaction.replace(R.id.container, reviewsFragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
-        starRating();
+
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-    }
-
-    /**
-     * Calculate the average of the rates of the users
-     */
-    public double getAverageRating() {
-        List<Review> reviews = restaurantFakeApi.getReviews();
-        return reviews.isEmpty() ? 0 :
-                (double) reviews.stream().mapToInt(Review::getRate).average().orElse(0);
-    }
-
-    /**
-     * Shows the rating stars according to the average of the rates of the users
-     */
-    public void starRating() {
-        double averageRating = getAverageRating();
-
-        // Cacher toutes les étoiles au départ
-        binding.rating1.setVisibility(View.GONE);
-        binding.rating2.setVisibility(View.GONE);
-        binding.rating3.setVisibility(View.GONE);
-        binding.rating4.setVisibility(View.GONE);
-        binding.rating5.setVisibility(View.GONE);
-
-        if (averageRating == 1.0)
-            binding.rating1.setVisibility(View.VISIBLE);
-        else if (averageRating > 1.0 && averageRating <= 2.0)
-            binding.rating2.setVisibility(View.VISIBLE);
-        else if (averageRating > 2.0 && averageRating <= 3.0)
-            binding.rating3.setVisibility(View.VISIBLE);
-        else if (averageRating > 3.0 && averageRating <= 4.0)
-            binding.rating4.setVisibility(View.VISIBLE);
-        else if (averageRating > 4.0 && averageRating < 5.0)
-            binding.rating5.setVisibility(View.VISIBLE);
-    }
-
-    private int countingRate5(List<Review> reviews) {
-        int count = 0;
-        for (Review review : reviews) {
-            if (review.getRate() == 5) {
-                count++;
-            }
-        }
-        return (int) ((count / (double) reviews.size()) * 100);
-    }
-
-
-    private int countingRate4(List<Review> reviews) {
-        int count = 0;
-        for (Review review : reviews) {
-            if (review.getRate() == 4) {
-                count++;
-            }
-        }
-        return (int) ((count / (double) reviews.size()) * 100);
-    }
-
-    private int countingRate3(List<Review> reviews) {
-        int count = 0;
-        for (Review review : reviews) {
-            if (review.getRate() == 3) {
-                count++;
-            }
-        }
-        return (int) ((count / (double) reviews.size()) * 100);
-    }
-
-    private int countingRate2(List<Review> reviews) {
-        int count = 0;
-        for (Review review : reviews) {
-            if (review.getRate() == 2) {
-                count++;
-            }
-        }
-        return (int) ((count / (double) reviews.size()) * 100);
-    }
-
-    private int countingRate1(List<Review> reviews) {
-        int count = 0;
-        for (Review review : reviews) {
-            if (review.getRate() == 1) {
-                count++;
-            }
-        }
-        return (int) ((count / (double) reviews.size()) * 100);
+        detailsViewModel.getTajMahalReviews().observe(requireActivity(), this::updateUIWithReview); // Observes changes in the reviews data and updates the UI accordingly.
     }
 
     /**
@@ -254,6 +155,40 @@ public class DetailsFragment extends Fragment {
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
         binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * Updates the UI components with the provided restaurant data.
+     *
+     * @param review The restaurant object containing details to be displayed.
+     */
+    @SuppressLint("SetTextI18n")
+    private void updateUIWithReview(List<Review> review) {
+        if (review == null) return;
+
+        // Shows the stars according to the rate (ie. 4 stars)
+        starRating();
+
+        // Shows the average of the rate (ie. 4.0)
+        binding.reviewRate.setText(String.valueOf(detailsViewModel.getAverageRating()));
+        Log.d("Test", "Avis : " + detailsViewModel.getAverageRating());
+
+        //Shows the ProgressLinearBar according to the rates of the users
+        int percentage5 = detailsViewModel.countingRate(review, 5);
+        int percentage4 = detailsViewModel.countingRate(review, 4);
+        int percentage3 = detailsViewModel.countingRate(review, 3);
+        int percentage2 = detailsViewModel.countingRate(review, 2);
+        int percentage1 = detailsViewModel.countingRate(review, 1);
+        binding.fiveStars.setProgress(percentage5);
+        binding.fourStars.setProgress(percentage4);
+        binding.threeStars.setProgress(percentage3);
+        binding.twoStars.setProgress(percentage2);
+        binding.oneStar.setProgress(percentage1);
+        Log.d("Test", "Pourcentage d'avis à 5 : " + detailsViewModel.countingRate(review, 5));
+
+        // Calculates the number of reviews (ie. (5))
+        binding.reviewNumber.setText("(" + (detailsViewModel.getReviewsNumber()) + ")");
+        Log.d("Test", "Nombre d'avis total : " + detailsViewModel.getReviewsNumber());
     }
 
     /**
@@ -302,6 +237,32 @@ public class DetailsFragment extends Fragment {
         } else {
             Toast.makeText(requireActivity(), R.string.no_browser_found, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Shows the rating stars according to the average of the rates of the users
+     */
+    private void starRating() {
+
+        double averageRating = detailsViewModel.getAverageRating();
+
+        // Cacher toutes les étoiles au départ
+        binding.rating1.setVisibility(View.GONE);
+        binding.rating2.setVisibility(View.GONE);
+        binding.rating3.setVisibility(View.GONE);
+        binding.rating4.setVisibility(View.GONE);
+        binding.rating5.setVisibility(View.GONE);
+
+        if (averageRating == 1.0)
+            binding.rating1.setVisibility(View.VISIBLE);
+        else if (averageRating > 1.0 && averageRating <= 2.0)
+            binding.rating2.setVisibility(View.VISIBLE);
+        else if (averageRating > 2.0 && averageRating <= 3.0)
+            binding.rating3.setVisibility(View.VISIBLE);
+        else if (averageRating > 3.0 && averageRating <= 4.0)
+            binding.rating4.setVisibility(View.VISIBLE);
+        else if (averageRating > 4.0 && averageRating < 5.0)
+            binding.rating5.setVisibility(View.VISIBLE);
     }
 
     public static DetailsFragment newInstance() {

@@ -4,12 +4,16 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
@@ -45,7 +50,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ReviewsFragment extends Fragment {
 
     private ReviewsAdapter reviewsAdapter;
-    private RecyclerView recyclerView;
     private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
     private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
@@ -104,15 +108,15 @@ public class ReviewsFragment extends Fragment {
         // shows the name of the user
         List<User> users = restaurantFakeApi.getUsers();
         User userName = users.get(0);
-        binding.nameMg.setText(userName.getName());
+        binding.usernameUser.setText(userName.getName());
 
         // shows the profile picture of the user
-        User profilePicturemg = users.get(0);
+        User profilePictureUser = users.get(0);
         Glide.with(this)
-                .load(profilePicturemg.getProfilePicture())
-                .into(binding.profilePictureMg);
+                .load(profilePictureUser.getProfilePicture())
+                .into(binding.profilePictureUser);
 
-        // shows the left arrow to go to the homepage
+        // when click on buttonBack, goes to the homepage
         binding.buttonBack.setOnClickListener(v -> {
             FragmentManager fragmentManager = getParentFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -120,54 +124,87 @@ public class ReviewsFragment extends Fragment {
             fragmentTransaction.replace(R.id.container, detailsFragment);
             fragmentTransaction.commit();
         });
-        // RecyclerView setup
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        reviewsAdapter = new ReviewsAdapter();
+
+        // when click on back button on phone, goes to the homepage
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        if (fragmentManager.getBackStackEntryCount() > 0) {
+                            fragmentManager.popBackStack(); // Revenir au fragment précédent
+                        } else
+                            requireActivity().finish(); // Quitter l'application si aucun fragment précédent
+                        }
+    });
+
+    // RecyclerView setup
+        binding.recyclerView.setLayoutManager(new
+
+    LinearLayoutManager(getContext()));
+    reviewsAdapter =new
+
+    ReviewsAdapter();
         binding.recyclerView.setAdapter(reviewsAdapter);
-        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), this::updateUIWithReviews);
-        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
-            if (reviews != null && !reviews.isEmpty()) {
-                Log.d("ReviewsFragment", "Nombre d'avis : " + reviews.size());
-                reviewsAdapter.submitList(reviews);
-            } else {
-                Log.d("ReviewsFragment", "Aucun avis trouvé !");
-            }
-        });
+    reviewsViewModel =new
+
+    ViewModelProvider(this).
+
+    get(ReviewsViewModel .class);
+        reviewsViewModel.getReviews().
+
+    observe(getViewLifecycleOwner(), this::updateUIWithReviews);
+        reviewsViewModel.getReviews().
+
+    observe(getViewLifecycleOwner(),reviews ->
+
+    {
+        if (reviews != null && !reviews.isEmpty()) {
+            Log.d("ReviewsFragment", "Nombre d'avis : " + reviews.size());
+            reviewsAdapter.submitList(reviews);
+        } else {
+            Log.d("ReviewsFragment", "Aucun avis trouvé !");
+        }
+    });
         binding.recyclerView.setVisibility(View.VISIBLE);
 
-    }
+    setupUI(); // Sets up user interface components.
 
-    /**
-     * Sets up the UI-specific properties, such as system UI flags and status bar color.
-     */
-    private void setupUI() {
-        Window window = requireActivity().getWindow();
-        window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        );
-        window.setStatusBarColor(Color.TRANSPARENT);
-    }
+    setupViewModel(); // Prepares the ViewModel for the fragment.
 
-    /**
-     * Initializes the ViewModel for this activity.
-     */
-    private void setupViewModel() {
-        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-    }
-
-    /**
-     * Updates the UI components with the provided restaurant data.
-     *
-     * @param review The restaurant object containing details to be displayed.
-     */
-    private void updateUIWithReviews(List<Review> review) {
-        if (review == null) return;
-
-    }
+}
 
 
-    public static ReviewsFragment newInstance() {
-        return new ReviewsFragment();
-    }
+/**
+ * Sets up the UI-specific properties, such as system UI flags and status bar color.
+ */
+private void setupUI() {
+    Window window = requireActivity().getWindow();
+    window.getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    );
+    window.setStatusBarColor(Color.TRANSPARENT);
+}
+
+/**
+ * Initializes the ViewModel for this activity.
+ */
+private void setupViewModel() {
+    reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+}
+
+/**
+ * Updates the UI components with the provided restaurant data.
+ *
+ * @param review The restaurant object containing details to be displayed.
+ */
+private void updateUIWithReviews(List<Review> review) {
+    if (review == null) return;
+
+}
+
+
+public static ReviewsFragment newInstance() {
+    return new ReviewsFragment();
+}
 }
