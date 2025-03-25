@@ -1,29 +1,17 @@
 package com.openclassrooms.tajmahal.ui.adapters;
 
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.openclassrooms.tajmahal.R;
-import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.databinding.ReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
-import com.openclassrooms.tajmahal.domain.model.User;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Un adaptateur pour afficher la liste des reviews dans un RecyclerView.
@@ -57,7 +45,7 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
     /**
      * ViewHolder pour afficher les éléments de la liste des avis.
      */
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
          * Constructeur du ViewHolder.

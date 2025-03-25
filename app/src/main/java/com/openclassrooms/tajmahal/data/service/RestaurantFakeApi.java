@@ -1,11 +1,8 @@
 package com.openclassrooms.tajmahal.data.service;
 
-import android.util.Log;
-
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

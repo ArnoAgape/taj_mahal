@@ -59,7 +59,7 @@ public class RestaurantRepository {
         return new MutableLiveData<>(restaurantApi.getReviews());
     }
 
-    public MutableLiveData<List<User>> getUsers() {
+    public LiveData<List<User>> getUsers() {
         return new MutableLiveData<>(restaurantApi.getUsers());
     }
 }
