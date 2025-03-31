@@ -10,6 +10,7 @@ import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
+import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class ReviewsViewModel extends ViewModel {
 
         // Notifier l'observateur
         reviewsLiveData.setValue(currentReviews); // Création d'une nouvelle instance pour déclencher l'observation
+
     }
 
     /**

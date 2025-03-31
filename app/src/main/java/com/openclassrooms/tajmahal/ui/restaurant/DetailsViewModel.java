@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
+import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
@@ -30,7 +31,7 @@ public class DetailsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
 
-    private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
+    private final MutableLiveData<Double> averageRatingLiveData = new MutableLiveData<>();
 
     /**
      * Constructor that Hilt will use to create an instance of MainViewModel.

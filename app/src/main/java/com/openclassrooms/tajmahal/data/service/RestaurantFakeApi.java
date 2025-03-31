@@ -35,11 +35,7 @@ public class RestaurantFakeApi implements RestaurantApi {
             new Review("Martyna Siddeswara", "https://xsgames.co/randomusers/assets/avatars/female/31.jpg", "Un service excellent et des plats incroyablement savoureux. Nous sommes vraiment satisfaits de notre expérience au restaurant.", 4),
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
-            new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4),
-            new Review("Arno Bouiron", "https://xsgames.co/randomusers/assets/avatars/male/20.jpg", "Ma copine me fait des meilleurs plats qu'ici !", 1),
-            new Review("Chantal L", "https://xsgames.co/randomusers/assets/avatars/female/23.jpg", "Très bon restaurant Indie ! Je recommande.", 4),
-            new Review("Marie H", "https://xsgames.co/randomusers/assets/avatars/female/24.jpg", "Très bon restaurant ndien ! Je recommande.", 4),
-            new Review("Sophie D", "https://xsgames.co/randomusers/assets/avatars/female/25.jpg", "Très bon restaurant Inden ! Je recommande.", 4)
+            new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4)
             ));
 
 
