@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="7dp"
-            android:contentDescription="@string/four_stars"
+            android:contentDescription="@string/rating"
             android:numStars="5"
             android:progressTint="#F3BB44"
             android:rating="5"

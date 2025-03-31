@@ -73,7 +73,7 @@
                 android:textColor="#666666"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/profilePictureUser"
-                tools:text="Manon Garcia"
+                tools:text="Arno Bouiron"
                 tools:ignore="MissingConstraints" />
 
             <RatingBar
@@ -83,9 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="7dp"
-                android:contentDescription="@string/four_stars"
+                android:contentDescription="@string/rating"
                 android:isIndicator="false"
-                android:numStars="5"
                 android:progressTint="#F3BB44"
                 android:rating="0"
                 android:scaleX="1.5"
@@ -100,7 +99,6 @@
                 android:layout_height="53dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:autofillHints="@string/hint_text"
                 android:background="@drawable/bg_edit_text"
                 android:textColor="#666666"
                 android:hint="@string/hint_text"

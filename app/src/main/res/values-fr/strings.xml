@@ -16,12 +16,7 @@
     <string name="tajmahal_typical_food_description">Un plat indien typique du restaurant Taj Mahal.</string>
     <string name="profile_picture_description">Votre photo de profil</string>
     <string name="hint_text">Partagez ici les détails de votre expérience</string>
-    <string name="zero_star">Aucune étoile</string>
-    <string name="one_star">Une étoile</string>
-    <string name="two_stars">Deux étoiles</string>
-    <string name="three_stars">Trois étoiles</string>
-    <string name="four_stars">Quatre étoiles</string>
-    <string name="five_stars">Cinq étoiles</string>
+    <string name="rating">Note</string>
     <string name="button_phone">Appeler le restaurant</string>
     <string name="button_website">Visiter le site web du restaurant</string>
     <string name="button_adress">Voir l\'emplacement du restaurant sur la carte</string>

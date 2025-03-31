@@ -12,9 +12,7 @@ import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -80,10 +78,6 @@ public class ReviewsViewModel extends ViewModel {
         Log.d("ReviewsViewModel", "Nombre de reviews récupérées : " + reviewsLiveData);
         return reviewsLiveData;
 
-    }
-
-    public void addReview(Review newReview) {
-        restaurantRepository.addReview(newReview);
     }
 
 }

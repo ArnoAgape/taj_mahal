@@ -64,7 +64,7 @@
 
         <ImageView
             android:id="@+id/rating5"
-            android:contentDescription="@string/five_stars"
+            android:contentDescription="@string/rating"
             android:src="@drawable/etoiles_5"
             android:layout_width="79dp"
             android:layout_height="11dp"
@@ -75,7 +75,7 @@
 
         <ImageView
             android:id="@+id/rating4"
-            android:contentDescription="@string/four_stars"
+            android:contentDescription="@string/rating"
             android:src="@drawable/etoiles_4"
             android:layout_width="79dp"
             android:layout_height="11dp"
@@ -86,7 +86,7 @@
 
         <ImageView
             android:id="@+id/rating3"
-            android:contentDescription="@string/three_stars"
+            android:contentDescription="@string/rating"
             android:src="@drawable/etoiles_3"
             android:layout_width="79dp"
             android:layout_height="11dp"
@@ -97,7 +97,7 @@
 
         <ImageView
             android:id="@+id/rating2"
-            android:contentDescription="@string/two_stars"
+            android:contentDescription="@string/rating"
             android:src="@drawable/etoiles_2"
             android:layout_width="79dp"
             android:layout_height="11dp"
@@ -108,7 +108,7 @@
 
         <ImageView
             android:id="@+id/rating1"
-            android:contentDescription="@string/one_star"
+            android:contentDescription="@string/rating"
             android:src="@drawable/etoiles_1"
             android:layout_width="79dp"
             android:layout_height="11dp"

@@ -16,12 +16,7 @@
     <string name="tajmahal_typical_food_description">A typical Indian dish from Taj Mahal restaurant.</string>
     <string name="profile_picture_description">Your profile picture</string>
     <string name="hint_text">Share the details of your experience</string>
-    <string name="zero_star">Zero star</string>
-    <string name="one_star">One star</string>
-    <string name="two_stars">Two stars</string>
-    <string name="three_stars">Three stars</string>
-    <string name="four_stars">Four stars</string>
-    <string name="five_stars">Five stars</string>
+    <string name="rating">Rating</string>
     <string name="button_phone">Call the restaurant</string>
     <string name="button_website">Visit the restaurant\'s website</string>
     <string name="button_adress">View the restaurant\'s location on map</string>

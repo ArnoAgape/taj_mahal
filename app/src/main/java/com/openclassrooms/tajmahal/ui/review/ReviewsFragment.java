@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +51,7 @@ public class ReviewsFragment extends Fragment {
     private EditText editText;
     private Button buttonValidate;
     private TextView textViewResult;
+    private RatingBar ratingBar;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -144,15 +146,11 @@ public class ReviewsFragment extends Fragment {
         });
 
         binding.buttonValidate.setOnClickListener(v -> {
-            /*binding.editText.setText();
-            String enteredText = editText.getText().toString().trim();*/
-            User currentUser = new User("Arno Bouiron", "0616161616", "test@gmail.com", "https://www.pixenli.com/image/nIujl02T");
-            reviewsViewModel.addReview("super !!", 5, currentUser);
-            /*FragmentManager fragmentManager = getParentFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
-            fragmentTransaction.replace(R.id.container, reviewsFragment);
-            fragmentTransaction.commit();*/
+
+            User currentUser = users.get(0);
+            int rating = (int) binding.rating.getRating();
+            String comment = String.valueOf(binding.editText.getText());
+            reviewsViewModel.addReview(comment, rating, currentUser);
         });
 
         setupUI(); // Sets up user interface components.

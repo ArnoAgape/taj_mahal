@@ -5,6 +5,7 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,6 +76,11 @@ public class RestaurantFakeApi implements RestaurantApi {
         return new ArrayList<>(reviews);
     }
 
+    @Override
+    public List<User> getUsers() {
+        return new ArrayList<>(users);
+    }
+
     /**
      * Retrieves a hard-coded {@link User} object for the "Taj Mahal".
      * <p>
@@ -85,13 +91,12 @@ public class RestaurantFakeApi implements RestaurantApi {
      *
      * @return The hard-coded {@link Restaurant} object for the "User".
      */
-    @Override
-    public List<User> getUsers() {
-        List <User> users = new ArrayList<>();
-        users.add(new User("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
-                "https://www.pixenli.com/image/nIujl02T"));
-        return users;
-    }
+
+        static List<User> users = new ArrayList<>(Collections.singletonList(
+            new User("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
+                    "https://www.pixenli.com/image/nIujl02T")
+    ));
+
 
     public static void addReview(Review review) {
         reviews.add(0, review); // Ajoute toujours en premier
