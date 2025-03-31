@@ -146,7 +146,7 @@ public class ReviewsFragment extends Fragment {
         binding.buttonValidate.setOnClickListener(v -> {
             /*binding.editText.setText();
             String enteredText = editText.getText().toString().trim();*/
-            User currentUser = new User("Manon Garcia", "0616161616", "test@gmail.com", "https://xsgames.co/randomusers/assets/avatars/male/20.jpg");
+            User currentUser = new User("Arno Bouiron", "0616161616", "test@gmail.com", "https://www.pixenli.com/image/nIujl02T");
             reviewsViewModel.addReview("super !!", 5, currentUser);
             /*FragmentManager fragmentManager = getParentFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

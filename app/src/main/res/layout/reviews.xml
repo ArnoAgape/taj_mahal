@@ -29,7 +29,6 @@
             android:layout_marginTop="15dp"
             android:contentDescription="@string/profile_picture_description"
             android:scaleType="centerCrop"
-            android:scaleX="-1"
             android:shape="oval"
             android:src="@drawable/img_manon_garcia"
             app:layout_constraintHorizontal_bias="0.0"
@@ -49,7 +48,7 @@
             app:layout_constraintLeft_toRightOf="@id/userProfilePicture"
             app:layout_constraintStart_toEndOf="@id/userProfilePicture"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Manon Garcia" />
+            tools:text="Arno Bouiron" />
 
         <RatingBar
             android:id="@+id/userRating"
