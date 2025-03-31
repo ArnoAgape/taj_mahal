@@ -166,17 +166,17 @@ public class DetailsFragment extends Fragment {
         Log.d("Test", "Avis : " + detailsViewModel.getAverageRating());
 
         //Shows the ProgressLinearBar according to the rates of the users
-        int percentage5 = detailsViewModel.countingRate(review, 5);
-        int percentage4 = detailsViewModel.countingRate(review, 4);
-        int percentage3 = detailsViewModel.countingRate(review, 3);
-        int percentage2 = detailsViewModel.countingRate(review, 2);
-        int percentage1 = detailsViewModel.countingRate(review, 1);
+        int percentage5 = detailsViewModel.countingRate(5);
+        int percentage4 = detailsViewModel.countingRate(4);
+        int percentage3 = detailsViewModel.countingRate(3);
+        int percentage2 = detailsViewModel.countingRate(2);
+        int percentage1 = detailsViewModel.countingRate(1);
         binding.fiveStars.setProgress(percentage5);
         binding.fourStars.setProgress(percentage4);
         binding.threeStars.setProgress(percentage3);
         binding.twoStars.setProgress(percentage2);
         binding.oneStar.setProgress(percentage1);
-        Log.d("Test", "Pourcentage d'avis à 5 : " + detailsViewModel.countingRate(review, 5));
+        Log.d("Test", "Pourcentage d'avis à 5 : " + detailsViewModel.countingRate(5));
 
         // Calculates the number of reviews (ie. (5))
         binding.reviewNumber.setText("(" + (detailsViewModel.getReviewsNumber()) + ")");

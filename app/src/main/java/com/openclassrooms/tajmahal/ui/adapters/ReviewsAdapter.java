@@ -37,7 +37,7 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = getItem(position);
-        holder.bind(getItem(position));
+        holder.bind(review);
         Log.d("ReviewsAdapter", "Affichage de l'avis : " + review.getComment());
     }
 
@@ -72,9 +72,12 @@ public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolde
             binding.userComment.setText(review.getComment());
 
             // shows the picture of the user
-            Glide.with(itemView.getContext())
+            Glide.with(binding.getRoot().getContext())
                     .load(review.getPicture())
+                    .placeholder(R.drawable.img_manon_garcia) // Image par défaut
+                    .error(R.drawable.img_manon_garcia) // Image si erreur de chargement
                     .into(binding.userProfilePicture);
+
         }
     }
 

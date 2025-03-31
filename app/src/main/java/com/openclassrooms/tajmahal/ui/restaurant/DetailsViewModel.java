@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
@@ -51,7 +52,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Review>> getTajMahalReviews() {
-        return restaurantRepository.getReviews();
+        return (MutableLiveData<List<Review>>) restaurantRepository.getReviews();
     }
 
     /**
@@ -95,16 +96,24 @@ public class DetailsViewModel extends ViewModel {
     /**
      * Calculate the average of the rates of the users
      */
+
     public double getAverageRating() {
-        List<Review> reviews = restaurantFakeApi.getReviews();
-        return reviews.isEmpty() ? 0 :
-                reviews.stream().mapToInt(Review::getRate).average().orElse(0);
+        List<Review> reviews = restaurantRepository.getReviews().getValue();
+        if (reviews == null || reviews.isEmpty()) {
+            return 0;
+        }
+        double average = reviews.stream().mapToInt(Review::getRate).average().orElse(0);
+
+        // Formatte la moyenne avec 1 chiffre après la virgule
+        return Double.parseDouble(String.format(Locale.US,"%.1f", average));
+
     }
 
     /**
      * Shows the ProgressLinearBar according to the rates of the users
      */
-    public int countingRate(List<Review> reviews, int rate) {
+    public int countingRate(int rate) {
+        List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
             return 0; // avoid to divide by 0
         }
@@ -121,7 +130,8 @@ public class DetailsViewModel extends ViewModel {
      * Calculates the number of reviews
      */
     public int getReviewsNumber() {
-        List<Review> reviews = restaurantFakeApi.getReviews();
+        List<Review> reviews = restaurantRepository.getReviews().getValue();
+        assert reviews != null;
         return reviews.size();
     }
 

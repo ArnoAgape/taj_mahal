@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,6 +32,7 @@ public class RestaurantRepository {
 
     // The API interface instance that will be used for network requests related to restaurant data.
     private final RestaurantApi restaurantApi;
+    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>(new ArrayList<>());
 
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
@@ -39,6 +42,7 @@ public class RestaurantRepository {
     @Inject
     public RestaurantRepository(RestaurantApi restaurantApi) {
         this.restaurantApi = restaurantApi;
+        fetchReviews();
     }
 
     /**
@@ -55,9 +59,20 @@ public class RestaurantRepository {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
 
-    public MutableLiveData<List<Review>> getReviews() {
-        return new MutableLiveData<>(restaurantApi.getReviews());
+    public LiveData<List<Review>> getReviews() {
+        return reviewsLiveData;
     }
+
+    private void fetchReviews() {
+        List<Review> reviews = restaurantApi.getReviews();
+        reviewsLiveData.setValue(reviews);
+    }
+
+    public void addReview(Review review) {
+        RestaurantFakeApi.addReview(review);
+        reviewsLiveData.setValue(new ArrayList<>(restaurantApi.getReviews())); // Met à jour LiveData après ajout
+    }
+
 
     public LiveData<List<User>> getUsers() {
         return new MutableLiveData<>(restaurantApi.getUsers());

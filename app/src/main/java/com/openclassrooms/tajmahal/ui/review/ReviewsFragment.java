@@ -3,6 +3,7 @@ package com.openclassrooms.tajmahal.ui.review;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,20 +12,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
-import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.adapters.ReviewsAdapter;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -41,6 +46,10 @@ public class ReviewsFragment extends Fragment {
     private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
     private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
+
+    private EditText editText;
+    private Button buttonValidate;
+    private TextView textViewResult;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -123,72 +132,61 @@ public class ReviewsFragment extends Fragment {
                             fragmentManager.popBackStack(); // Revenir au fragment précédent
                         } else
                             requireActivity().finish(); // Quitter l'application si aucun fragment précédent
-                        }
-    });
+                    }
+                });
 
-    // RecyclerView setup
-        binding.recyclerView.setLayoutManager(new
-
-    LinearLayoutManager(getContext()));
-    reviewsAdapter =new
-
-    ReviewsAdapter();
+        // RecyclerView setup
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewsAdapter = new ReviewsAdapter();
         binding.recyclerView.setAdapter(reviewsAdapter);
-    reviewsViewModel =new
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), newReviews -> {reviewsAdapter.submitList(new ArrayList<>(newReviews));
+        });
 
-    ViewModelProvider(this).
+        binding.buttonValidate.setOnClickListener(v -> {
+            /*binding.editText.setText();
+            String enteredText = editText.getText().toString().trim();*/
+            User currentUser = new User("Manon Garcia", "0616161616", "test@gmail.com", "https://xsgames.co/randomusers/assets/avatars/male/20.jpg");
+            reviewsViewModel.addReview("super !!", 5, currentUser);
+            /*FragmentManager fragmentManager = getParentFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            ReviewsFragment reviewsFragment = ReviewsFragment.newInstance();
+            fragmentTransaction.replace(R.id.container, reviewsFragment);
+            fragmentTransaction.commit();*/
+        });
 
-    get(ReviewsViewModel .class);
-        reviewsViewModel.getReviews().
+        setupUI(); // Sets up user interface components.
 
-    observe(getViewLifecycleOwner(), this::updateUIWithReviews);
-        reviewsViewModel.getReviews().
+        setupViewModel(); // Prepares the ViewModel for the fragment.
 
-    observe(getViewLifecycleOwner(),reviews ->
-
-    {
-        if (reviews != null && !reviews.isEmpty()) {
-            Log.d("ReviewsFragment", "Nombre d'avis : " + reviews.size());
-            reviewsAdapter.submitList(reviews);
-        } else {
-            Log.d("ReviewsFragment", "Aucun avis trouvé !");
-        }
-    });
-        binding.recyclerView.setVisibility(View.VISIBLE);
-
-    setupUI(); // Sets up user interface components.
-
-    setupViewModel(); // Prepares the ViewModel for the fragment.
-
-}
+    }
 
 
-/**
- * Sets up the UI-specific properties, such as system UI flags and status bar color.
- */
-private void setupUI() {
-    Window window = requireActivity().getWindow();
-    window.getDecorView().setSystemUiVisibility(
-            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-    );
-    window.setStatusBarColor(Color.TRANSPARENT);
-}
+    /**
+     * Sets up the UI-specific properties, such as system UI flags and status bar color.
+     */
+    private void setupUI() {
+        Window window = requireActivity().getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+        window.setStatusBarColor(Color.TRANSPARENT);
+    }
 
-/**
- * Initializes the ViewModel for this activity.
- */
-private void setupViewModel() {
-    reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-}
+    /**
+     * Initializes the ViewModel for this activity.
+     */
+    private void setupViewModel() {
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+    }
 
-/**
- * Updates the UI components with the provided restaurant data.
- *
- * @param review The restaurant object containing details to be displayed.
- */
-private void updateUIWithReviews(List<Review> review) {
-}
-public static ReviewsFragment newInstance() {
-    return new ReviewsFragment();
-}
+    /**
+     * Updates the UI components with the provided restaurant data.
+     *
+     * @param review The restaurant object containing details to be displayed.
+     */
+
+    public static ReviewsFragment newInstance() {
+        return new ReviewsFragment();
+    }
 }

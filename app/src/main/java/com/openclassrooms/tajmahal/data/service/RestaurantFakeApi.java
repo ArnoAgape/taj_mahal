@@ -29,14 +29,17 @@ import java.util.List;
  * @see RestaurantApi
  */
 public class RestaurantFakeApi implements RestaurantApi {
-    List<Review> reviews = Arrays.asList(
+    static List<Review> reviews = new ArrayList<>(Arrays.asList(
             new Review("Ranjit Singh", "https://xsgames.co/randomusers/assets/avatars/male/71.jpg", "Service très rapide et nourriture délicieuse, nous mangeons ici chaque week-end, c'est très rapide et savoureux. Continuez ainsi!", 5),
             new Review("Martyna Siddeswara", "https://xsgames.co/randomusers/assets/avatars/female/31.jpg", "Un service excellent et des plats incroyablement savoureux. Nous sommes vraiment satisfaits de notre expérience au restaurant.", 4),
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
             new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4),
-            new Review("Arno Bouiron", "https://xsgames.co/randomusers/assets/avatars/male/20.jpg", "Ma copine me fait des meilleurs plats qu'ici !", 1)
-            );
+            new Review("Arno Bouiron", "https://xsgames.co/randomusers/assets/avatars/male/20.jpg", "Ma copine me fait des meilleurs plats qu'ici !", 1),
+            new Review("Chantal L", "https://xsgames.co/randomusers/assets/avatars/female/23.jpg", "Très bon restaurant Indie ! Je recommande.", 4),
+            new Review("Marie H", "https://xsgames.co/randomusers/assets/avatars/female/24.jpg", "Très bon restaurant ndien ! Je recommande.", 4),
+            new Review("Sophie D", "https://xsgames.co/randomusers/assets/avatars/female/25.jpg", "Très bon restaurant Inden ! Je recommande.", 4)
+            ));
 
 
     /**
@@ -64,12 +67,12 @@ public class RestaurantFakeApi implements RestaurantApi {
      * with pre-defined attributes.
      * </p>
      *
-     * @return The hard-coded list {@link Review} for the "Taj Mahal".
+     * @return The hard-coded list {@link Review} for the "Reviews".
      */
     @Override
     public List<Review> getReviews() {
 
-        return new ArrayList<>(this.reviews);
+        return new ArrayList<>(reviews);
     }
 
     /**
@@ -80,7 +83,7 @@ public class RestaurantFakeApi implements RestaurantApi {
      * with specific details.
      * </p>
      *
-     * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
+     * @return The hard-coded {@link Restaurant} object for the "User".
      */
     @Override
     public List<User> getUsers() {
@@ -90,6 +93,8 @@ public class RestaurantFakeApi implements RestaurantApi {
         return users;
     }
 
-
+    public static void addReview(Review review) {
+        reviews.add(0, review); // Ajoute toujours en premier
+    }
 
 }
