@@ -5,7 +5,6 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,26 +35,7 @@ public class RestaurantFakeApi implements RestaurantApi {
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
             new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4)
-            ));
-
-
-    /**
-     * Retrieves a hard-coded {@link Restaurant} object for the "Taj Mahal".
-     * <p>
-     * This method simulates an API call by immediately returning a Restaurant object
-     * with pre-defined attributes. The object represents the "Taj Mahal" restaurant
-     * with specific details.
-     * </p>
-     *
-     * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
-     */
-    @Override
-    public Restaurant getRestaurant() {
-        return new Restaurant("Taj Mahal", "Indien", "11h30 - 14h30・18h30 - 22h00",
-                "12 Avenue de la Brique - 75010 Paris", "http://www.tajmahal.fr", "06 12 34 56 78",
-                true, true, "", "", true);
-    }
-
+    ));
 
     /**
      * Retrieves a hard-coded {@link Review} object for the "Taj Mahal".
@@ -72,30 +52,39 @@ public class RestaurantFakeApi implements RestaurantApi {
         return new ArrayList<>(reviews);
     }
 
-    @Override
-    public List<User> getUsers() {
-        return new ArrayList<>(users);
-    }
-
     /**
-     * Retrieves a hard-coded {@link User} object for the "Taj Mahal".
+     * Retrieves a hard-coded {@link Restaurant} object for the "Taj Mahal".
      * <p>
      * This method simulates an API call by immediately returning a Restaurant object
      * with pre-defined attributes. The object represents the "Taj Mahal" restaurant
      * with specific details.
      * </p>
      *
-     * @return The hard-coded {@link Restaurant} object for the "User".
+     * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
      */
 
-        static List<User> users = new ArrayList<>(Collections.singletonList(
-            new User("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
-                    "https://www.pixenli.com/image/nIujl02T")
-    ));
-
-
-    public static void addReview(Review review) {
-        reviews.add(0, review); // Ajoute toujours en premier
+    @Override
+    public Restaurant getRestaurant() {
+        return new Restaurant("Taj Mahal", "Indien", "11h30 - 14h30・18h30 - 22h00",
+                "12 Avenue de la Brique - 75010 Paris", "http://www.tajmahal.fr", "06 12 34 56 78",
+                true, true, "", "", true);
     }
+
+    /**
+     * Retrieves a hard-coded {@link User} object for the "Taj Mahal".
+     * <p>
+     * This method simulates an API call by immediately returning a User list
+     * with pre-defined attributes.
+     * </p>
+     *
+     * @return The hard-coded list {@link User} for the "Users".
+     */
+
+    @Override
+    public User getUsers() {
+        return new User ("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
+                "https://www.pixenli.com/image/nIujl02T");
+    }
+
 
 }

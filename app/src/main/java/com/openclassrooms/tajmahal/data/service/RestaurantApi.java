@@ -62,5 +62,5 @@ public interface RestaurantApi {
      * @return The {@link Restaurant} object containing all the details of the restaurant.
      */
 
-    List<User> getUsers();
+    User getUsers();
 }

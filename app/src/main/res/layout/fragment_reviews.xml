@@ -99,6 +99,7 @@
                 android:layout_height="53dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
+                android:autofillHints="@string/hint_text"
                 android:background="@drawable/bg_edit_text"
                 android:textColor="#666666"
                 android:hint="@string/hint_text"

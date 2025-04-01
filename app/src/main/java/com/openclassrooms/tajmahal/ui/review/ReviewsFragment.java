@@ -4,7 +4,6 @@ package com.openclassrooms.tajmahal.ui.review;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,29 +12,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
-import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
+import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.adapters.ReviewsAdapter;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -47,9 +37,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ReviewsFragment extends Fragment {
 
     private ReviewsAdapter reviewsAdapter;
-    private ReviewsViewModel reviewsViewModel;
     private FragmentReviewsBinding binding;
-    private final RestaurantFakeApi restaurantFakeApi = new RestaurantFakeApi();
+    private ReviewsViewModel reviewsViewModel;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -99,21 +88,67 @@ public class ReviewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // shows the name of the restaurant
-        binding.tvRestaurantName.setText(R.string.app_name);
+        recyclerViewSetup();
+        buttonBack();
+        updateValidateButton();
+        updateListener();
+        setupUI();
+        setupViewModel();
+        reviewsViewModel.getTajMahalRestaurant().observe(getViewLifecycleOwner(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+        reviewsViewModel.getUsers().observe(getViewLifecycleOwner(), this::updateUIWithUser); // Observes changes in the user data and updates the UI accordingly.
+    }
 
-        // shows the name of the user
-        List<User> users = restaurantFakeApi.getUsers();
-        User userName = users.get(0);
-        binding.usernameUser.setText(userName.getName());
+    /**
+     * Allows the reviews to be displayed thanks to the recyclerView.
+     */
 
-        // shows the profile picture of the user
-        User profilePictureUser = users.get(0);
-        Glide.with(this)
-                .load(profilePictureUser.getProfilePicture())
+    private void recyclerViewSetup() {
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewsAdapter = new ReviewsAdapter();
+        binding.recyclerView.setAdapter(reviewsAdapter);
+        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
+        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), newReviews -> reviewsAdapter.submitList(new ArrayList<>(newReviews)));
+    }
+
+    /**
+     * Updates the UI components with the provided user data.
+     *
+     * @param user The user object containing details to be displayed.
+     */
+
+    private void updateUIWithUser(User user) {
+        if (user == null) return;
+
+        binding.usernameUser.setText(user.getName()); // User name
+
+        Glide.with(this) // User picture
+                .load(user.getProfilePicture())
                 .into(binding.profilePictureUser);
 
-        // when click on buttonBack, goes to the homepage
+        binding.buttonValidate.setOnClickListener(v -> { // Button validate
+            int rating = (int) binding.rating.getRating();
+            String comment = String.valueOf(binding.editText.getText());
+            reviewsViewModel.addReview(comment, rating, user);
+            binding.editText.getText().clear();
+        });
+    }
+
+    /**
+     * Updates the UI components with the provided restaurant data.
+     *
+     * @param restaurant The restaurant object containing details to be displayed.
+     */
+
+    private void updateUIWithRestaurant(Restaurant restaurant) {
+        if (restaurant == null) return;
+        binding.tvRestaurantName.setText(restaurant.getName());
+    }
+
+    /**
+     * Returns to the previous fragment.
+     */
+
+    private void buttonBack() {
         binding.buttonBack.setOnClickListener(v -> {
             FragmentManager fragmentManager = getParentFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -122,7 +157,6 @@ public class ReviewsFragment extends Fragment {
             fragmentTransaction.commit();
         });
 
-        // when click on back button on phone, goes to the homepage
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
                     @Override
@@ -134,18 +168,33 @@ public class ReviewsFragment extends Fragment {
                         fragmentTransaction.commit();
                     }
                 });
+    }
 
-        // RecyclerView setup
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        reviewsAdapter = new ReviewsAdapter();
-        binding.recyclerView.setAdapter(reviewsAdapter);
-        reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), newReviews -> {
-            reviewsAdapter.submitList(new ArrayList<>(newReviews));
-        });
+    /**
+     * Checks if the button is enabled.
+     */
+    private void updateValidateButton() {
+        int grey = Color.parseColor("#DADADA"); // Grey
+        int red = Color.parseColor("#E91E63"); // Red
+        String comment = String.valueOf(binding.editText.getText());
+        int rating = (int) binding.rating.getRating();
 
-        // Adding a new review
+        if (rating < 1 || comment.length() < 5) {
+            binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(grey));
+            binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(grey));
+            binding.buttonValidate.setEnabled(false);
+        } else {
+            binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(red));
+            binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(red));
+            binding.buttonValidate.setEnabled(true);
+        }
+    }
 
+    /**
+     * Method to listen to the rating bar and the comment from the user.
+     */
+
+    private void updateListener() {
         // Listener for the RatingBar
         binding.rating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> updateValidateButton());
 
@@ -164,39 +213,6 @@ public class ReviewsFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        binding.buttonValidate.setOnClickListener(v -> {
-            int rating = (int) binding.rating.getRating();
-            String comment = String.valueOf(binding.editText.getText());
-            User currentUser = users.get(0);
-            reviewsViewModel.addReview(comment, rating, currentUser);
-            binding.editText.getText().clear();
-        });
-
-        updateValidateButton(); // method to check if the button is enabled
-        setupUI(); // Sets up user interface components.
-        setupViewModel(); // Prepares the ViewModel for the fragment.
-
-    }
-
-    /**
-     * Checking if the button is enabled
-     */
-    private void updateValidateButton() {
-        int grey = Color.parseColor("#DADADA"); // Grey
-        int red = Color.parseColor("#E91E63"); // Red
-        String comment = String.valueOf(binding.editText.getText());
-        int rating = (int) binding.rating.getRating();
-
-        if (rating < 1 || comment.length() < 5) {
-            binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(grey));
-            binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(grey));
-            binding.buttonValidate.setEnabled(false);
-        } else {
-            binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(red));
-            binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(red));
-            binding.buttonValidate.setEnabled(true);
-        }
     }
 
     /**

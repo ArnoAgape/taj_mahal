@@ -1,22 +1,16 @@
 package com.openclassrooms.tajmahal.ui.review;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
+import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
-import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
@@ -28,7 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class ReviewsViewModel extends ViewModel {
-    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>(new ArrayList<>());
+    private final LiveData<List<Review>> reviewsLiveData;
     private final RestaurantRepository restaurantRepository;
 
     /**
@@ -40,35 +34,25 @@ public class ReviewsViewModel extends ViewModel {
     public ReviewsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
 
-        // Observer les avis et mettre à jour reviewsLiveData
-        restaurantRepository.getReviews().observeForever(reviews -> {
-            if (reviews != null) {
-                reviewsLiveData.setValue(reviews);
-            } else {
-                reviewsLiveData.setValue(new ArrayList<>());
-            }
-        });
+        reviewsLiveData = Transformations.map(restaurantRepository.getReviews(), reviews ->
+                (reviews != null) ? reviews : new ArrayList<>()
+        );
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        restaurantRepository.getReviews().removeObserver(reviewsLiveData::setValue);
-    }
-
+    /**
+     * Allows to add a new review.
+     */
     public void addReview(String comment, int rating, User user) {
-        List<Review> currentReviews = reviewsLiveData.getValue();
-        if (currentReviews == null) {
-            currentReviews = new ArrayList<>();
-        }
-
-        // Créer un nouvel avis et l'ajouter au début
         Review newReview = new Review(user.getName(), user.getProfilePicture(), comment, rating);
-        currentReviews.add(0, newReview);
+        restaurantRepository.addReview(newReview);
+    }
 
-        // Notifier l'observateur
-        reviewsLiveData.setValue(currentReviews); // Création d'une nouvelle instance pour déclencher l'observation
+    /**
+     * Data from the Restaurant to updateUIWithRestaurant
+     */
 
+    public LiveData<Restaurant> getTajMahalRestaurant() {
+        return restaurantRepository.getRestaurant();
     }
 
     /**
@@ -76,10 +60,18 @@ public class ReviewsViewModel extends ViewModel {
      *
      * @return LiveData object containing the details of the reviews.
      */
+
     public LiveData<List<Review>> getReviews() {
-        Log.d("ReviewsViewModel", "Nombre de reviews récupérées : " + reviewsLiveData);
         return reviewsLiveData;
 
+    }
+
+    /**
+     * Users from the user database to updateUIWithUser
+     */
+
+    public LiveData<User> getUsers() {
+        return restaurantRepository.getUsers();
     }
 
 }

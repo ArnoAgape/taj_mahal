@@ -2,21 +2,16 @@ package com.openclassrooms.tajmahal.ui.restaurant;
 
 import android.content.Context;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
-import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
-import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
-
 import javax.inject.Inject;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
@@ -30,8 +25,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class DetailsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
-
-    private final MutableLiveData<Double> averageRatingLiveData = new MutableLiveData<>();
 
     /**
      * Constructor that Hilt will use to create an instance of MainViewModel.
@@ -52,8 +45,19 @@ public class DetailsViewModel extends ViewModel {
         return restaurantRepository.getRestaurant();
     }
 
-    public MutableLiveData<List<Review>> getTajMahalReviews() {
-        return (MutableLiveData<List<Review>>) restaurantRepository.getReviews();
+    LiveData<DetailsReviewState> getTajMahalReviews() {
+        return Transformations.map(restaurantRepository.getReviews(), reviews -> {
+            // Called everytime the value inside the LiveData of restaurantRepository.getReviews() is changed
+            return new DetailsReviewState(
+                    getAverageRating(),
+                    reviews.size(),
+                    countingRate(1),
+                    countingRate(2),
+                    countingRate(3),
+                    countingRate(4),
+                    countingRate(5)
+            );
+        });
     }
 
     /**
@@ -98,14 +102,14 @@ public class DetailsViewModel extends ViewModel {
      * Calculate the average of the rates of the users
      */
 
-    public double getAverageRating() {
+    private double getAverageRating() {
         List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
             return 0;
         }
         double average = reviews.stream().mapToInt(Review::getRate).average().orElse(0);
 
-        // Formatte la moyenne avec 1 chiffre après la virgule
+        // Format average with 1 decimal place
         return Double.parseDouble(String.format(Locale.US,"%.1f", average));
 
     }
@@ -113,7 +117,7 @@ public class DetailsViewModel extends ViewModel {
     /**
      * Shows the ProgressLinearBar according to the rates of the users
      */
-    public int countingRate(int rate) {
+    private int countingRate(int rate) {
         List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
             return 0; // avoid to divide by 0
@@ -125,15 +129,6 @@ public class DetailsViewModel extends ViewModel {
             }
         }
         return (int) ((count / (double) reviews.size()) * 100);
-    }
-
-    /**
-     * Calculates the number of reviews
-     */
-    public int getReviewsNumber() {
-        List<Review> reviews = restaurantRepository.getReviews().getValue();
-        assert reviews != null;
-        return reviews.size();
     }
 
 }
