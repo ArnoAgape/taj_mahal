@@ -3,6 +3,7 @@ package com.openclassrooms.tajmahal.data.service;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +63,6 @@ public class RestaurantFakeApi implements RestaurantApi {
      *
      * @return The hard-coded {@link Restaurant} object for the "Taj Mahal".
      */
-
     @Override
     public Restaurant getRestaurant() {
         return new Restaurant("Taj Mahal", "Indien", "11h30 - 14h30・18h30 - 22h00",
@@ -79,12 +79,9 @@ public class RestaurantFakeApi implements RestaurantApi {
      *
      * @return The hard-coded list {@link User} for the "Users".
      */
-
     @Override
     public User getUsers() {
-        return new User ("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
+        return new User("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
                 "https://www.pixenli.com/image/nIujl02T");
     }
-
-
 }

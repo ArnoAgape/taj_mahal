@@ -16,7 +16,8 @@ import java.util.Objects;
  * Example:
  * <pre>
  * Restaurant tajMahal = new Restaurant("Taj Mahal", "Indian", "11h30 - 22h00",
- *                                      "123 Street", "http://tajmahal.com", "1234567890", true, false);
+ *                                      "123 Street", "http://tajmahal.com", "1234567890", true,
+ *                                      false, 4.0, (257), true);
  * </pre>
  */
 public class Restaurant {
@@ -30,26 +31,24 @@ public class Restaurant {
     private String phoneNumber;
     private boolean dineIn;
     private boolean takeAway;
-
     private String rate;
-
     private String numberReviews;
-
     private Boolean allStars;
 
     /**
      * Constructor for the Restaurant class.
      *
-     * @param name        The name of the restaurant.
-     * @param type        The type or cuisine of the restaurant (e.g., Indian, Italian).
-     * @param hours       The operational hours of the restaurant.
-     * @param address     The address of the restaurant.
-     * @param website     The website URL of the restaurant.
-     * @param phoneNumber The contact phone number of the restaurant.
-     * @param dineIn      A boolean indicating if dine-in is available.
-     * @param takeAway    A boolean indicating if take-away service is available.
-     * @param rate        The rate of the restaurant.
+     * @param name          The name of the restaurant.
+     * @param type          The type or cuisine of the restaurant (e.g., Indian, Italian).
+     * @param hours         The operational hours of the restaurant.
+     * @param address       The address of the restaurant.
+     * @param website       The website URL of the restaurant.
+     * @param phoneNumber   The contact phone number of the restaurant.
+     * @param dineIn        A boolean indicating if dine-in is available.
+     * @param takeAway      A boolean indicating if take-away service is available.
+     * @param rate          The rate of the restaurant.
      * @param numberReviews The number of reviews of the restaurant.
+     * @param allStars      The percentage of reviews from 1 to 5 stars
      */
     public Restaurant(String name, String type, String hours, String address, String website, String phoneNumber, boolean dineIn, boolean takeAway, String rate, String numberReviews, boolean allStars) {
         this.name = name;
@@ -74,9 +73,9 @@ public class Restaurant {
     }
 
     /**
-     * Calcule le code de hachage en utilisant la description et la date d'échéance de la tâche.
+     * Calculates the hash code using the job description and due date.
      *
-     * @return Le code de hachage calculé.
+     * @return The calculated hash code.
      */
     @Override
     public int hashCode() {
@@ -166,10 +165,7 @@ public class Restaurant {
     public boolean displayAllStars() {
         return allStars;
     }
-
     public void setAllStars(boolean allStars) {
         this.allStars = allStars;
     }
-
-
 }

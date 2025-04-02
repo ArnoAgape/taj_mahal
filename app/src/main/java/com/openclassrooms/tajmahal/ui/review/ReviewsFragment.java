@@ -1,6 +1,7 @@
 package com.openclassrooms.tajmahal.ui.review;
 
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
@@ -29,9 +32,12 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ReviewsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * ReviewsFragment is the entry point of the reviews.
+ * It displays reviews from users about a restaurant and provides functionality to submit a review:
+ * rating, comment and user information.
+ * <p>
+ * This class uses {@link FragmentReviewsBinding} for data binding to its layout and
+ * {@link ReviewsViewModel} to interact with data sources and manage UI-related data.
  */
 @AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
@@ -51,7 +57,6 @@ public class ReviewsFragment extends Fragment {
      * @param savedInstanceState A bundle containing previously saved instance state.
      *                           If the fragment is being re-created from a previous saved state, this is the state.
      */
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,6 @@ public class ReviewsFragment extends Fragment {
      *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,7 +87,6 @@ public class ReviewsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -101,7 +104,6 @@ public class ReviewsFragment extends Fragment {
     /**
      * Allows the reviews to be displayed thanks to the recyclerView.
      */
-
     private void recyclerViewSetup() {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         reviewsAdapter = new ReviewsAdapter();
@@ -111,11 +113,11 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
+     * Submits a review
      * Updates the UI components with the provided user data.
      *
      * @param user The user object containing details to be displayed.
      */
-
     private void updateUIWithUser(User user) {
         if (user == null) return;
 
@@ -129,7 +131,10 @@ public class ReviewsFragment extends Fragment {
             int rating = (int) binding.rating.getRating();
             String comment = String.valueOf(binding.editText.getText());
             reviewsViewModel.addReview(comment, rating, user);
+            binding.rating.setRating(0);
             binding.editText.getText().clear();
+            hideKeyboard();
+            Toast.makeText(requireActivity(), R.string.review_submitted, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -138,7 +143,6 @@ public class ReviewsFragment extends Fragment {
      *
      * @param restaurant The restaurant object containing details to be displayed.
      */
-
     private void updateUIWithRestaurant(Restaurant restaurant) {
         if (restaurant == null) return;
         binding.tvRestaurantName.setText(restaurant.getName());
@@ -147,7 +151,6 @@ public class ReviewsFragment extends Fragment {
     /**
      * Returns to the previous fragment.
      */
-
     private void buttonBack() {
         binding.buttonBack.setOnClickListener(v -> {
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -157,6 +160,7 @@ public class ReviewsFragment extends Fragment {
             fragmentTransaction.commit();
         });
 
+        // back button from the phone
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
                     @Override
@@ -171,6 +175,17 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
+     * Hides the Android keyboard after submitting a review
+     */
+    private void hideKeyboard() {
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
      * Checks if the button is enabled.
      */
     private void updateValidateButton() {
@@ -178,8 +193,10 @@ public class ReviewsFragment extends Fragment {
         int red = Color.parseColor("#E91E63"); // Red
         String comment = String.valueOf(binding.editText.getText());
         int rating = (int) binding.rating.getRating();
+        String trimmedComment = comment.replaceAll("\\s+", ""); // Deletes all the spaces
 
-        if (rating < 1 || comment.length() < 5) {
+        // conditions to submit a review
+        if (rating < 1 || trimmedComment.length() < 5 || comment.length() > 1500) {
             binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(grey));
             binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(grey));
             binding.buttonValidate.setEnabled(false);
@@ -193,7 +210,6 @@ public class ReviewsFragment extends Fragment {
     /**
      * Method to listen to the rating bar and the comment from the user.
      */
-
     private void updateListener() {
         // Listener for the RatingBar
         binding.rating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> updateValidateButton());
@@ -233,6 +249,9 @@ public class ReviewsFragment extends Fragment {
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
     }
 
+    /**
+     * Defines a static method for creating a new instance of ReviewsFragment.
+     */
     public static ReviewsFragment newInstance() {
         return new ReviewsFragment();
     }

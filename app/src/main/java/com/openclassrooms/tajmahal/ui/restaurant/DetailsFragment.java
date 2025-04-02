@@ -5,21 +5,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
+
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.ui.review.ReviewsFragment;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
@@ -47,7 +51,6 @@ public class DetailsFragment extends Fragment {
      * @param savedInstanceState A bundle containing previously saved instance state.
      *                           If the fragment is being re-created from a previous saved state, this is the state.
      */
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,6 @@ public class DetailsFragment extends Fragment {
      *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
@@ -80,7 +82,6 @@ public class DetailsFragment extends Fragment {
      * @param savedInstanceState If non-null, this fragment is being re-constructed
      *                           from a previous saved state as given here.
      */
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

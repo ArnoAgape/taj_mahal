@@ -1,21 +1,26 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
 import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+
 import javax.inject.Inject;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
- * MainViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
+ * DetailsViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
  * It communicates with the {@link RestaurantRepository} to fetch restaurant details and provides
  * utility methods related to the restaurant UI.
  * <p>
@@ -45,6 +50,11 @@ public class DetailsViewModel extends ViewModel {
         return restaurantRepository.getRestaurant();
     }
 
+    /**
+     * Maps the reviews of the Taj Mahal restaurant.
+     *
+     * @return new DetailsReviewState containing the methods used in DetailsFragment.
+     */
     LiveData<DetailsReviewState> getTajMahalReviews() {
         return Transformations.map(restaurantRepository.getReviews(), reviews -> {
             // Called everytime the value inside the LiveData of restaurantRepository.getReviews() is changed
@@ -99,9 +109,8 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
-     * Calculate the average of the rates of the users
+     * Calculates the average of the rates of the users
      */
-
     private double getAverageRating() {
         List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
@@ -110,8 +119,7 @@ public class DetailsViewModel extends ViewModel {
         double average = reviews.stream().mapToInt(Review::getRate).average().orElse(0);
 
         // Format average with 1 decimal place
-        return Double.parseDouble(String.format(Locale.US,"%.1f", average));
-
+        return Double.parseDouble(String.format(Locale.US, "%.1f", average));
     }
 
     /**
@@ -130,5 +138,4 @@ public class DetailsViewModel extends ViewModel {
         }
         return (int) ((count / (double) reviews.size()) * 100);
     }
-
 }

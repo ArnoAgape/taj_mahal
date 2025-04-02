@@ -1,20 +1,17 @@
 package com.openclassrooms.tajmahal.ui.review;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
-import com.openclassrooms.tajmahal.ui.restaurant.DetailsFragment;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
- * MainViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
+ * ReviewsViewModel is responsible for preparing and managing the data for the {@link ReviewsFragment}.
  * It communicates with the {@link RestaurantRepository} to fetch restaurant details and provides
  * utility methods related to the restaurant UI.
  * <p>
@@ -22,7 +19,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class ReviewsViewModel extends ViewModel {
-    private final LiveData<List<Review>> reviewsLiveData;
     private final RestaurantRepository restaurantRepository;
 
     /**
@@ -33,10 +29,6 @@ public class ReviewsViewModel extends ViewModel {
     @Inject
     public ReviewsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-
-        reviewsLiveData = Transformations.map(restaurantRepository.getReviews(), reviews ->
-                (reviews != null) ? reviews : new ArrayList<>()
-        );
     }
 
     /**
@@ -50,7 +42,6 @@ public class ReviewsViewModel extends ViewModel {
     /**
      * Data from the Restaurant to updateUIWithRestaurant
      */
-
     public LiveData<Restaurant> getTajMahalRestaurant() {
         return restaurantRepository.getRestaurant();
     }
@@ -62,14 +53,12 @@ public class ReviewsViewModel extends ViewModel {
      */
 
     public LiveData<List<Review>> getReviews() {
-        return reviewsLiveData;
-
+        return restaurantRepository.getReviews();
     }
 
     /**
      * Users from the user database to updateUIWithUser
      */
-
     public LiveData<User> getUsers() {
         return restaurantRepository.getUsers();
     }

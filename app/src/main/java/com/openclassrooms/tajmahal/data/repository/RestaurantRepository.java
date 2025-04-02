@@ -25,8 +25,10 @@ import javax.inject.Singleton;
 @Singleton
 public class RestaurantRepository {
 
-    // The API interface instance that will be used for network requests related to restaurant data.
+    /** The API interface instance for fetching restaurant-related data. */
     private final RestaurantApi restaurantApi;
+
+    /** LiveData object holding the list of reviews for real-time updates. */
     private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>(new ArrayList<>());
 
     /**
@@ -41,43 +43,70 @@ public class RestaurantRepository {
     }
 
     /**
-     * Fetches the restaurant details and the reviews
-     * This method will make a network call using the provided {@link RestaurantApi} instance
-     * to fetch restaurant data. Note that error handling and any transformations on the data
-     * would need to be managed.
+     * Retrieves the restaurant details.
+     * <p>
+     * This method fetches restaurant data via {@link RestaurantApi}.
+     * Note that error handling and data transformations (if necessary) should be implemented
+     * at a higher level, such as in the ViewModel.
+     * </p>
      *
-     *
-     * @return LiveData holding the restaurant details.
+     * @return LiveData containing restaurant details.
      */
     public LiveData<Restaurant> getRestaurant() {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
 
+    /**
+     * Retrieves the list of reviews as LiveData.
+     * <p>
+     * The LiveData allows UI components to observe changes in real-time.
+     * </p>
+     *
+     * @return LiveData containing a list of user reviews.
+     */
     public LiveData<List<Review>> getReviews() {
         return reviewsLiveData;
     }
 
+    /**
+     * Retrieves the user details as LiveData.
+     * <p>
+     * This method provides user-related information fetched from the API.
+     * </p>
+     *
+     * @return LiveData containing user details.
+     */
     public LiveData<User> getUsers() {
         return new MutableLiveData<>(restaurantApi.getUsers());
     }
 
+    /**
+     * Fetches the list of reviews from the API.
+     * <p>
+     * This method makes a network call to fetch restaurant reviews and updates the LiveData object
+     * so that observers (such as UI components) receive the latest data.
+     * </p>
+     */
     private void fetchReviews() {
         List<Review> reviews = restaurantApi.getReviews();
         reviewsLiveData.setValue(reviews);
     }
 
     /**
-     * Allows to add a new review.
+     * Adds a new review to the list.
+     * <p>
+     * This method updates the list of reviews and notifies any observers of the change.
+     * The newly added review is placed at the top of the list.
+     * </p>
      *
+     * @param review The review to be added.
      */
     public void addReview(Review review) {
         List<Review> currentReviews = reviewsLiveData.getValue();
         if (currentReviews == null) {
             currentReviews = new ArrayList<>();
         }
-        currentReviews.add(0, review); // Add new notice first
-        // Notify the observer
-        reviewsLiveData.setValue(currentReviews); // Create a new instance to trigger observation
-
+        currentReviews.add(0, review); // Add new review at the beginning of the list
+        reviewsLiveData.setValue(currentReviews); // Notify observers
     }
 }

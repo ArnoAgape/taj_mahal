@@ -1,8 +1,6 @@
 package com.openclassrooms.tajmahal.ui.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -14,73 +12,74 @@ import com.openclassrooms.tajmahal.databinding.ReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
 /**
- * Un adaptateur pour afficher la liste des reviews dans un RecyclerView.
+ * An adapter for displaying the list of reviews in a RecyclerView.
  */
-
 public class ReviewsAdapter extends ListAdapter<Review, ReviewsAdapter.ViewHolder> {
 
     /**
-     * Constructeur de l'adaptateur.
+     * Adapter constructor.
      */
     public ReviewsAdapter() {
         super(new ItemCallback());
     }
 
+    /**
+     * ViewHolder constructor.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.reviews, parent, false);
-        return new ViewHolder(itemView);
+        ReviewsBinding binding = ReviewsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
-
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Review review = getItem(position);
-        holder.bind(review);
-        Log.d("ReviewsAdapter", "Affichage de l'avis : " + review.getComment());
-    }
-
 
     /**
-     * ViewHolder pour afficher les éléments de la liste des avis.
+     * Binds the data to the ViewHolder at the specified position.
+     *
+     * @param holder   The ViewHolder to bind the data to.
+     * @param position The position of the item within the adapter's data set.
      */
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(getItem(position));
+    }
+
+    /**
+     * ViewHolder to display review items.
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private final ReviewsBinding binding;
 
         /**
-         * Constructeur du ViewHolder.
+         * ViewHolder constructor.
          */
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ViewHolder(ReviewsBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         /**
-         * Lie les données de l'avis au ViewHolder.
+         * Binds notification data to ViewHolder.
          *
-         * @param review L'avis à afficher.
+         * @param review The notification to display.
          */
         public void bind(Review review) {
-            ReviewsBinding binding = ReviewsBinding.bind(itemView);
-
-            // shows the name of the user
             binding.userName.setText(review.getUsername());
-
-            // shows the rating of the user
             binding.userRating.setRating(review.getRate());
-
-            // shows the comment of the user
             binding.userComment.setText(review.getComment());
 
-            // shows the picture of the user
+            // Load the user profile picture
             Glide.with(binding.getRoot().getContext())
                     .load(review.getPicture())
-                    .placeholder(R.drawable.img_manon_garcia) // Image par défaut
-                    .error(R.drawable.img_manon_garcia) // Image si erreur de chargement
+                    .placeholder(R.drawable.img_default_user)
+                    .error(R.drawable.img_default_user)
                     .into(binding.userProfilePicture);
-
         }
     }
 
+    /**
+     * Callback to compare list items.
+     */
     private static class ItemCallback extends DiffUtil.ItemCallback<Review> {
 
         @Override

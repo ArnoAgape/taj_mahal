@@ -30,7 +30,7 @@
             android:contentDescription="@string/profile_picture_description"
             android:scaleType="centerCrop"
             android:shape="oval"
-            android:src="@drawable/img_manon_garcia"
+            android:src="@drawable/img_default_user"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
