@@ -59,7 +59,7 @@ public class DetailsViewModel extends ViewModel {
         return Transformations.map(restaurantRepository.getReviews(), reviews -> {
             // Called everytime the value inside the LiveData of restaurantRepository.getReviews() is changed
             return new DetailsReviewState(
-                    getAverageRating(),
+                    (float) getAverageRating(),
                     reviews.size(),
                     countingRate(1),
                     countingRate(2),
@@ -78,33 +78,17 @@ public class DetailsViewModel extends ViewModel {
     public String getCurrentDay(Context context) {
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        String dayString;
+        String dayString = switch (dayOfWeek) {
+            case Calendar.MONDAY -> context.getString(R.string.monday);
+            case Calendar.TUESDAY -> context.getString(R.string.tuesday);
+            case Calendar.WEDNESDAY -> context.getString(R.string.wednesday);
+            case Calendar.THURSDAY -> context.getString(R.string.thursday);
+            case Calendar.FRIDAY -> context.getString(R.string.friday);
+            case Calendar.SATURDAY -> context.getString(R.string.saturday);
+            case Calendar.SUNDAY -> context.getString(R.string.sunday);
+            default -> "";
+        };
 
-        switch (dayOfWeek) {
-            case Calendar.MONDAY:
-                dayString = context.getString(R.string.monday);
-                break;
-            case Calendar.TUESDAY:
-                dayString = context.getString(R.string.tuesday);
-                break;
-            case Calendar.WEDNESDAY:
-                dayString = context.getString(R.string.wednesday);
-                break;
-            case Calendar.THURSDAY:
-                dayString = context.getString(R.string.thursday);
-                break;
-            case Calendar.FRIDAY:
-                dayString = context.getString(R.string.friday);
-                break;
-            case Calendar.SATURDAY:
-                dayString = context.getString(R.string.saturday);
-                break;
-            case Calendar.SUNDAY:
-                dayString = context.getString(R.string.sunday);
-                break;
-            default:
-                dayString = "";
-        }
         return dayString;
     }
 
@@ -116,10 +100,10 @@ public class DetailsViewModel extends ViewModel {
         if (reviews == null || reviews.isEmpty()) {
             return 0;
         }
-        double average = reviews.stream().mapToInt(Review::getRate).average().orElse(0);
+        float average = (float) reviews.stream().mapToInt(Review::getRate).average().orElse(0);
 
         // Format average with 1 decimal place
-        return Double.parseDouble(String.format(Locale.US, "%.1f", average));
+        return Float.parseFloat(String.format(Locale.US, "%.1f", average));
     }
 
     /**

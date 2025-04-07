@@ -35,8 +35,10 @@ public class ReviewsViewModel extends ViewModel {
      * Allows to add a new review.
      */
     public void addReview(String comment, int rating, User user) {
-        Review newReview = new Review(user.getName(), user.getProfilePicture(), comment, rating);
-        restaurantRepository.addReview(newReview);
+        if(comment.trim().length() > 5 && rating >= 1 && comment.length() < 1500) {
+            Review newReview = new Review(user.getName(), user.getProfilePicture(), comment, rating);
+            restaurantRepository.addReview(newReview);
+        }
     }
 
     /**

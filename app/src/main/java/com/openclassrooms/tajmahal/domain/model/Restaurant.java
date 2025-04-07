@@ -64,6 +64,12 @@ public class Restaurant {
         this.allStars = allStars;
     }
 
+    /**
+     * Compares this user to another object for equality.
+     *
+     * @param o The object to compare with.
+     * @return {@code true} if both objects have the same user details, otherwise {@code false}.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

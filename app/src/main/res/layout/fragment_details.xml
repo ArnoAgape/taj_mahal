@@ -52,7 +52,7 @@
             android:id="@+id/review_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/jakarta_regular"
             android:textColor="#666666"
@@ -62,58 +62,19 @@
             app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
             tools:text="4.0" />
 
-        <ImageView
-            android:id="@+id/rating5"
-            android:contentDescription="@string/rating"
-            android:src="@drawable/etoiles_5"
-            android:layout_width="79dp"
-            android:layout_height="11dp"
+        <RatingBar
+            android:id="@+id/rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@id/review_rate"/>
-
-        <ImageView
-            android:id="@+id/rating4"
             android:contentDescription="@string/rating"
-            android:src="@drawable/etoiles_4"
-            android:layout_width="79dp"
-            android:layout_height="11dp"
-            android:layout_marginTop="5dp"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@id/review_rate"/>
-
-        <ImageView
-            android:id="@+id/rating3"
-            android:contentDescription="@string/rating"
-            android:src="@drawable/etoiles_3"
-            android:layout_width="79dp"
-            android:layout_height="11dp"
-            android:layout_marginTop="5dp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@id/review_rate"/>
-
-        <ImageView
-            android:id="@+id/rating2"
-            android:contentDescription="@string/rating"
-            android:src="@drawable/etoiles_2"
-            android:layout_width="79dp"
-            android:layout_height="11dp"
-            android:layout_marginTop="5dp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@id/review_rate"/>
-
-        <ImageView
-            android:id="@+id/rating1"
-            android:contentDescription="@string/rating"
-            android:src="@drawable/etoiles_1"
-            android:layout_width="79dp"
-            android:layout_height="11dp"
-            android:layout_marginTop="5dp"
-            android:visibility="invisible"
+            android:isIndicator="false"
+            android:progressTint="#F3BB44"
+            android:rating="0"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:stepSize="0.5"
             app:layout_constraintStart_toStartOf="@id/tvRestaurantName"
             app:layout_constraintTop_toBottomOf="@id/review_rate"/>
 
@@ -121,7 +82,7 @@
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/jakarta_regular"
             android:textSize="12sp"

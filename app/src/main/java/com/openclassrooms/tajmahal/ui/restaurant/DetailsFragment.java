@@ -158,17 +158,17 @@ public class DetailsFragment extends Fragment {
         if (state == null) return;
 
         // Shows the stars according to the rate (ie. 4 stars)
-        starRating(state.getAverageRating());
+        binding.rating.setRating(state.getAverageRating());
 
         // Shows the average of the rate (ie. 4.0)
         binding.reviewRate.setText(String.valueOf(state.getAverageRating()));
 
         //Shows the ProgressLinearBar according to the rates of the users
-        int percentage5 = state.getCountingRate5();
-        int percentage4 = state.getCountingRate4();
-        int percentage3 = state.getCountingRate3();
-        int percentage2 = state.getCountingRate2();
-        int percentage1 = state.getCountingRate1();
+        int percentage5 = state.getProgressBar5();
+        int percentage4 = state.getProgressBar4();
+        int percentage3 = state.getProgressBar3();
+        int percentage2 = state.getProgressBar2();
+        int percentage1 = state.getProgressBar1();
         binding.fiveStars.setProgress(percentage5);
         binding.fourStars.setProgress(percentage4);
         binding.threeStars.setProgress(percentage3);
@@ -177,30 +177,6 @@ public class DetailsFragment extends Fragment {
 
         // Calculates the number of reviews (ie. (5))
         binding.reviewNumber.setText("(" + (state.getNumberOfReviews()) + ")");
-    }
-
-    /**
-     * Shows the rating stars according to the average of the rates of the users.
-     */
-    private void starRating(double averageRating) {
-
-        // Hide all the stars in the beginning
-        binding.rating1.setVisibility(View.GONE);
-        binding.rating2.setVisibility(View.GONE);
-        binding.rating3.setVisibility(View.GONE);
-        binding.rating4.setVisibility(View.GONE);
-        binding.rating5.setVisibility(View.GONE);
-
-        if (averageRating == 1.0)
-            binding.rating1.setVisibility(View.VISIBLE);
-        else if (averageRating > 1.0 && averageRating <= 2.0)
-            binding.rating2.setVisibility(View.VISIBLE);
-        else if (averageRating > 2.0 && averageRating <= 3.0)
-            binding.rating3.setVisibility(View.VISIBLE);
-        else if (averageRating > 3.0 && averageRating <= 4.0)
-            binding.rating4.setVisibility(View.VISIBLE);
-        else if (averageRating > 4.0 && averageRating < 5.0)
-            binding.rating5.setVisibility(View.VISIBLE);
     }
 
     /**
