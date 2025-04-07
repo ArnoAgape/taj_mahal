@@ -33,7 +33,8 @@ public class Restaurant {
     private boolean takeAway;
     private String rate;
     private String numberReviews;
-    private Boolean allStars;
+    private Boolean allRatingBars;
+    private Boolean stars;
 
     /**
      * Constructor for the Restaurant class.
@@ -48,9 +49,9 @@ public class Restaurant {
      * @param takeAway      A boolean indicating if take-away service is available.
      * @param rate          The rate of the restaurant.
      * @param numberReviews The number of reviews of the restaurant.
-     * @param allStars      The percentage of reviews from 1 to 5 stars
+     * @param allRatingBars      The percentage of reviews from 1 to 5 stars
      */
-    public Restaurant(String name, String type, String hours, String address, String website, String phoneNumber, boolean dineIn, boolean takeAway, String rate, String numberReviews, boolean allStars) {
+    public Restaurant(String name, String type, String hours, String address, String website, String phoneNumber, boolean dineIn, boolean takeAway, String rate, String numberReviews, boolean allRatingBars, boolean stars) {
         this.name = name;
         this.type = type;
         this.hours = hours;
@@ -61,7 +62,8 @@ public class Restaurant {
         this.takeAway = takeAway;
         this.rate = rate;
         this.numberReviews = numberReviews;
-        this.allStars = allStars;
+        this.allRatingBars = allRatingBars;
+        this.stars = stars;
     }
 
     /**
@@ -75,7 +77,7 @@ public class Restaurant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return dineIn == that.dineIn && takeAway == that.takeAway && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(hours, that.hours) && Objects.equals(address, that.address) && Objects.equals(website, that.website) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(rate, that.rate) && Objects.equals(numberReviews, that.numberReviews) && Objects.equals(allStars, that.allStars);
+        return dineIn == that.dineIn && takeAway == that.takeAway && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(hours, that.hours) && Objects.equals(address, that.address) && Objects.equals(website, that.website) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(rate, that.rate) && Objects.equals(numberReviews, that.numberReviews) && Objects.equals(allRatingBars, that.allRatingBars) && Objects.equals(allRatingBars, that.stars);
     }
 
     /**
@@ -85,7 +87,7 @@ public class Restaurant {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, hours, address, website, phoneNumber, dineIn, takeAway, rate, numberReviews, allStars);
+        return Objects.hash(name, type, hours, address, website, phoneNumber, dineIn, takeAway, rate, numberReviews, allRatingBars, stars);
     }
 
     public String getName() {
@@ -168,10 +170,16 @@ public class Restaurant {
         this.numberReviews = numberReviews;
     }
 
-    public boolean displayAllStars() {
-        return allStars;
+    public boolean displayAllRatingBars() {
+        return allRatingBars;
     }
-    public void setAllStars(boolean allStars) {
-        this.allStars = allStars;
+    public void setAllRatingBars(boolean allRatingBars) {
+        this.allRatingBars = allRatingBars;
     }
+
+    public Boolean displayStars() {
+        return stars;}
+
+    public void setStars(Boolean stars) {
+        this.stars = stars;}
 }

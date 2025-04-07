@@ -103,9 +103,7 @@ public class RestaurantRepository {
      */
     public void addReview(Review review) {
         List<Review> currentReviews = reviewsLiveData.getValue();
-        if (currentReviews == null) {
-            currentReviews = new ArrayList<>();
-        }
+        assert currentReviews != null;
         currentReviews.add(0, review); // Add new review at the beginning of the list
         reviewsLiveData.setValue(currentReviews); // Notify observers
     }

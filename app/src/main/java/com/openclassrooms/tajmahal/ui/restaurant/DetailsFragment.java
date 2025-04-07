@@ -145,7 +145,8 @@ public class DetailsFragment extends Fragment {
         binding.buttonAddress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
-        binding.allStars.setVisibility(restaurant.displayAllStars() ? View.VISIBLE : View.GONE);
+        binding.allStars.setVisibility(restaurant.displayAllRatingBars() ? View.VISIBLE : View.GONE);
+        binding.rating.setVisibility(restaurant.displayStars() ? View.VISIBLE : View.GONE);
     }
 
     /**
