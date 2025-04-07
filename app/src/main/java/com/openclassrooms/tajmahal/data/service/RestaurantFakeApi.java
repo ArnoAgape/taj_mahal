@@ -80,7 +80,7 @@ public class RestaurantFakeApi implements RestaurantApi {
      * @return The hard-coded list {@link User} for the "Users".
      */
     @Override
-    public User getUsers() {
+    public User getUser() {
         return new User("Arno Bouiron", "06.12.34.56.78", "manon.garcia@gmail.com",
                 "https://www.pixenli.com/image/nIujl02T");
     }

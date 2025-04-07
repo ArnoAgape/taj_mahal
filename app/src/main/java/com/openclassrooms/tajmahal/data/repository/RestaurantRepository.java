@@ -76,8 +76,8 @@ public class RestaurantRepository {
      *
      * @return LiveData containing user details.
      */
-    public LiveData<User> getUsers() {
-        return new MutableLiveData<>(restaurantApi.getUsers());
+    public LiveData<User> getUser() {
+        return new MutableLiveData<>(restaurantApi.getUser());
     }
 
     /**

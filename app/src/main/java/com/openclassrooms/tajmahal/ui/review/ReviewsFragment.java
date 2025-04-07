@@ -98,7 +98,7 @@ public class ReviewsFragment extends Fragment {
         setupUI();
         setupViewModel();
         reviewsViewModel.getTajMahalRestaurant().observe(getViewLifecycleOwner(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-        reviewsViewModel.getUsers().observe(getViewLifecycleOwner(), this::updateUIWithUser); // Observes changes in the user data and updates the UI accordingly.
+        reviewsViewModel.getUser().observe(getViewLifecycleOwner(), this::updateUIWithUser); // Observes changes in the user data and updates the UI accordingly.
     }
 
     /**

@@ -61,8 +61,8 @@ public class ReviewsViewModel extends ViewModel {
     /**
      * Users from the user database to updateUIWithUser
      */
-    public LiveData<User> getUsers() {
-        return restaurantRepository.getUsers();
+    public LiveData<User> getUser() {
+        return restaurantRepository.getUser();
     }
 
 }
