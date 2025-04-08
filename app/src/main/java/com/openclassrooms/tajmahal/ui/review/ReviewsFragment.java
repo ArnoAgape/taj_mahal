@@ -75,8 +75,8 @@ public class ReviewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentReviewsBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        binding = FragmentReviewsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
+        return binding.getRoot(); // Returns the root view.
     }
 
     /**
@@ -196,7 +196,7 @@ public class ReviewsFragment extends Fragment {
         String trimmedComment = comment.replaceAll("\\s+", ""); // Deletes all the spaces
 
         // conditions to submit a review
-        if (rating < 1 || trimmedComment.length() < 6 || comment.length() >= 1500) {
+        if (rating < 1 || trimmedComment.length() < 6 || comment.length() > 1500) {
             binding.buttonValidate.setChipBackgroundColor(ColorStateList.valueOf(grey));
             binding.buttonValidate.setChipStrokeColor(ColorStateList.valueOf(grey));
             binding.buttonValidate.setEnabled(false);

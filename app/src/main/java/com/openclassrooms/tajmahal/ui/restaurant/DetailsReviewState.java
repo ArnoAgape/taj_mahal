@@ -3,8 +3,8 @@ package com.openclassrooms.tajmahal.ui.restaurant;
 import java.util.Objects;
 
 /**
- * Represents the state of reviews for a restaurant, including average rating,
- * total number of reviews, and the count of ratings from 1 to 5 stars.
+ * Represents the state of the reviews for a restaurant, including the average rating,
+ * the total number of reviews, and the count of ratings from 1 to 5 stars.
  */
 final class DetailsReviewState {
 
@@ -22,19 +22,19 @@ final class DetailsReviewState {
      * @param averageRating The average rating of all reviews.
      * @param numberOfReviews The total number of reviews.
      * @param progressBar1 The count of reviews with a 1-star rating.
-     * @param countingRate2 The count of reviews with a 2-star rating.
-     * @param countingRate3 The count of reviews with a 3-star rating.
-     * @param countingRate4 The count of reviews with a 4-star rating.
-     * @param countingRate5 The count of reviews with a 5-star rating.
+     * @param progressBar2 The count of reviews with a 2-star rating.
+     * @param progressBar3 The count of reviews with a 3-star rating.
+     * @param progressBar4 The count of reviews with a 4-star rating.
+     * @param progressBar5 The count of reviews with a 5-star rating.
      */
-    DetailsReviewState(float averageRating, int numberOfReviews, int progressBar1, int countingRate2, int countingRate3, int countingRate4, int countingRate5) {
+    DetailsReviewState(float averageRating, int numberOfReviews, int progressBar1, int progressBar2, int progressBar3, int progressBar4, int progressBar5) {
         this.averageRating = averageRating;
         this.numberOfReviews = numberOfReviews;
         this.progressBar1 = progressBar1;
-        this.progressBar2 = countingRate2;
-        this.progressBar3 = countingRate3;
-        this.progressBar4 = countingRate4;
-        this.progressBar5 = countingRate5;
+        this.progressBar2 = progressBar2;
+        this.progressBar3 = progressBar3;
+        this.progressBar4 = progressBar4;
+        this.progressBar5 = progressBar5;
     }
 
     /**

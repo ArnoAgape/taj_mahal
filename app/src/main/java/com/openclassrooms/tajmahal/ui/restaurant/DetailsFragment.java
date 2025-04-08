@@ -69,8 +69,7 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.
-        // Returns the root view.
-        return binding.getRoot();
+        return binding.getRoot(); // Returns the root view.
 
     }
 

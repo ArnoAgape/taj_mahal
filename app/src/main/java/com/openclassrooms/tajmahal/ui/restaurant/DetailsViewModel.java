@@ -51,10 +51,24 @@ public class DetailsViewModel extends ViewModel {
     }
 
     /**
-     * Maps the reviews of the Taj Mahal restaurant.
+     * Returns a LiveData of {@link DetailsReviewState}, representing a structured and summarized view
+     * of all user reviews for the Taj Mahal restaurant.
      *
-     * @return new DetailsReviewState containing the methods used in DetailsFragment.
+     * <p>This method uses {@code Transformations.map} to observe the list of reviews from the
+     * {@link RestaurantRepository}. Every time the list of reviews is updated, this transformation
+     * is triggered to:
+     * <ul>
+     *     <li>Calculate the average rating.</li>
+     *     <li>Count the total number of reviews.</li>
+     *     <li>Count how many reviews have a rating from 1 to 5 stars.</li>
+     * </ul>
+     *
+     * <p>This processed data is then wrapped in a {@link DetailsReviewState} object,
+     * which can be directly observed by the View layer ({@code DetailsFragment}) to update the UI.
+     *
+     * @return LiveData containing the current state of restaurant reviews in a display-ready format.
      */
+
     LiveData<DetailsReviewState> getTajMahalReviews() {
         return Transformations.map(restaurantRepository.getReviews(), reviews -> {
             // Called everytime the value inside the LiveData of restaurantRepository.getReviews() is changed
@@ -78,7 +92,8 @@ public class DetailsViewModel extends ViewModel {
     public String getCurrentDay(Context context) {
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        String dayString = switch (dayOfWeek) {
+
+        return switch (dayOfWeek) {
             case Calendar.MONDAY -> context.getString(R.string.monday);
             case Calendar.TUESDAY -> context.getString(R.string.tuesday);
             case Calendar.WEDNESDAY -> context.getString(R.string.wednesday);
@@ -88,8 +103,6 @@ public class DetailsViewModel extends ViewModel {
             case Calendar.SUNDAY -> context.getString(R.string.sunday);
             default -> "";
         };
-
-        return dayString;
     }
 
     /**
