@@ -6,15 +6,15 @@ import java.util.Objects;
  * Represents the state of the reviews for a restaurant, including the average rating,
  * the total number of reviews, and the count of ratings from 1 to 5 stars.
  */
-final class DetailsReviewState {
+public final class DetailsReviewState {
 
     private final float averageRating;
     private final int numberOfReviews;
-    private final int progressBar1;
-    private final int progressBar2;
-    private final int progressBar3;
-    private final int progressBar4;
-    private final int progressBar5;
+    private final double progressBar1;
+    private final double progressBar2;
+    private final double progressBar3;
+    private final double progressBar4;
+    private final double progressBar5;
 
     /**
      * Constructs a new {@link DetailsReviewState} with the given review statistics.
@@ -27,7 +27,7 @@ final class DetailsReviewState {
      * @param progressBar4 The count of reviews with a 4-star rating.
      * @param progressBar5 The count of reviews with a 5-star rating.
      */
-    DetailsReviewState(float averageRating, int numberOfReviews, int progressBar1, int progressBar2, int progressBar3, int progressBar4, int progressBar5) {
+    public DetailsReviewState(float averageRating, int numberOfReviews, double progressBar1, double progressBar2, double progressBar3, double progressBar4, double progressBar5) {
         this.averageRating = averageRating;
         this.numberOfReviews = numberOfReviews;
         this.progressBar1 = progressBar1;
@@ -60,7 +60,7 @@ final class DetailsReviewState {
      *
      * @return The number of 1-star reviews.
      */
-    public int getProgressBar1() {
+    public double getProgressBar1() {
         return progressBar1;
     }
 
@@ -69,7 +69,7 @@ final class DetailsReviewState {
      *
      * @return The number of 2-star reviews.
      */
-    public int getProgressBar2() {
+    public double getProgressBar2() {
         return progressBar2;
     }
 
@@ -78,7 +78,7 @@ final class DetailsReviewState {
      *
      * @return The number of 3-star reviews.
      */
-    public int getProgressBar3() {
+    public double getProgressBar3() {
         return progressBar3;
     }
 
@@ -87,7 +87,7 @@ final class DetailsReviewState {
      *
      * @return The number of 4-star reviews.
      */
-    public int getProgressBar4() {
+    public double getProgressBar4() {
         return progressBar4;
     }
 
@@ -96,7 +96,7 @@ final class DetailsReviewState {
      *
      * @return The number of 5-star reviews.
      */
-    public int getProgressBar5() {
+    public double getProgressBar5() {
         return progressBar5;
     }
 

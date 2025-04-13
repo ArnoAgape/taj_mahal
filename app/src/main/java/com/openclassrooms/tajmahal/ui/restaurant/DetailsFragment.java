@@ -164,16 +164,16 @@ public class DetailsFragment extends Fragment {
         binding.reviewRate.setText(String.valueOf(state.getAverageRating()));
 
         //Shows the ProgressLinearBar according to the rates of the users
-        int percentage5 = state.getProgressBar5();
-        int percentage4 = state.getProgressBar4();
-        int percentage3 = state.getProgressBar3();
-        int percentage2 = state.getProgressBar2();
-        int percentage1 = state.getProgressBar1();
-        binding.fiveStars.setProgress(percentage5);
-        binding.fourStars.setProgress(percentage4);
-        binding.threeStars.setProgress(percentage3);
-        binding.twoStars.setProgress(percentage2);
-        binding.oneStar.setProgress(percentage1);
+        double percentage5 = state.getProgressBar5();
+        double percentage4 = state.getProgressBar4();
+        double percentage3 = state.getProgressBar3();
+        double percentage2 = state.getProgressBar2();
+        double percentage1 = state.getProgressBar1();
+        binding.fiveStars.setProgress((int) percentage5);
+        binding.fourStars.setProgress((int) percentage4);
+        binding.threeStars.setProgress((int) percentage3);
+        binding.twoStars.setProgress((int) percentage2);
+        binding.oneStar.setProgress((int) percentage1);
 
         // Calculates the number of reviews (ie. (5))
         binding.reviewNumber.setText("(" + (state.getNumberOfReviews()) + ")");

@@ -69,7 +69,7 @@ public class DetailsViewModel extends ViewModel {
      * @return LiveData containing the current state of restaurant reviews in a display-ready format.
      */
 
-    LiveData<DetailsReviewState> getTajMahalReviews() {
+    public LiveData<DetailsReviewState> getTajMahalReviews() {
         return Transformations.map(restaurantRepository.getReviews(), reviews -> {
             // Called everytime the value inside the LiveData of restaurantRepository.getReviews() is changed
             return new DetailsReviewState(
@@ -108,7 +108,7 @@ public class DetailsViewModel extends ViewModel {
     /**
      * Calculates the average of the rates of the users
      */
-    private double getAverageRating() {
+    public double getAverageRating() {
         List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
             return 0;
@@ -122,7 +122,7 @@ public class DetailsViewModel extends ViewModel {
     /**
      * Shows the ProgressLinearBar according to the rates of the users
      */
-    private int countingRate(int rate) {
+    public double countingRate(double rate) {
         List<Review> reviews = restaurantRepository.getReviews().getValue();
         if (reviews == null || reviews.isEmpty()) {
             return 0; // avoid to divide by 0
@@ -133,6 +133,6 @@ public class DetailsViewModel extends ViewModel {
                 count++;
             }
         }
-        return (int) ((count / (double) reviews.size()) * 100);
+        return (double) ((count / (double) reviews.size()) * 100);
     }
 }

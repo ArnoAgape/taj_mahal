@@ -8,7 +8,12 @@ import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
+import com.openclassrooms.tajmahal.ui.restaurant.DetailsReviewState;
+import com.openclassrooms.tajmahal.ui.restaurant.DetailsViewModel;
 import com.openclassrooms.tajmahal.ui.review.ReviewsViewModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +37,33 @@ public class ReviewUnitTest {
         Review review = new Review("Patrick Bruel", "https://xsgames.co/randomusers/assets/avatars/male/91.jpg", "Service au top !", 5);
         // Check that the review actually contains this comment
         assertEquals(5, review.getRate(), 0.001);
+    }
+
+    /**
+     * Calculates the average of the reviews
+     */
+
+    @Test
+    public void testAverageRating_And_ProgressBar() {
+
+        User alice = new User("Alice", "0101010101", "alice@email.com", "url");
+        User bob = new User("Bob", "0202020202", "bob@email.com", "url");
+        User nicolas = new User("Nicolas", "0101010101", "alice@email.com", "url");
+
+        RestaurantRepository repo = new RestaurantRepository(new RestaurantFakeApi());
+        DetailsViewModel detailsViewModel = new DetailsViewModel(repo);
+        ReviewsViewModel reviewsViewModel = new ReviewsViewModel(repo);
+        reviewsViewModel.addReview("Au top !", 5, alice);
+        reviewsViewModel.addReview("Passable", 1, bob);
+        reviewsViewModel.addReview("Moyen !", 3, nicolas);
+        List<Review> reviews = reviewsViewModel.getReviews().getValue();
+        assert reviews != null;
+        DetailsReviewState state = new DetailsReviewState((float) detailsViewModel.getAverageRating(), reviews.size(), detailsViewModel.countingRate(1),
+                detailsViewModel.countingRate(2), detailsViewModel.countingRate(3), detailsViewModel.countingRate(4) , detailsViewModel.countingRate(5));
+
+        assertEquals(3.6, state.getAverageRating(), 0.0001);
+        assertEquals(12.5, state.getProgressBar1(), 0.0001);
+
     }
 
     /**

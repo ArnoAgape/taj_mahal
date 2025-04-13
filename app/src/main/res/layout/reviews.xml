@@ -48,7 +48,7 @@
             app:layout_constraintLeft_toRightOf="@id/userProfilePicture"
             app:layout_constraintStart_toEndOf="@id/userProfilePicture"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Arno Bouiron" />
+            tools:text="Pseudonyme" />
 
         <RatingBar
             android:id="@+id/userRating"

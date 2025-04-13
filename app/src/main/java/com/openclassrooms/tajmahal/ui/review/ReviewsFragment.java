@@ -109,7 +109,8 @@ public class ReviewsFragment extends Fragment {
         reviewsAdapter = new ReviewsAdapter();
         binding.recyclerView.setAdapter(reviewsAdapter);
         reviewsViewModel = new ViewModelProvider(this).get(ReviewsViewModel.class);
-        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), newReviews -> reviewsAdapter.submitList(new ArrayList<>(newReviews)));
+        reviewsViewModel.getReviews().observe(getViewLifecycleOwner(), newReviews ->
+                reviewsAdapter.submitList(new ArrayList<>(newReviews)));
     }
 
     /**
